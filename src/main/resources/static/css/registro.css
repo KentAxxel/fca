@@ -381,3 +381,30 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #777;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.toggle-password:hover {
+    color: #0b7a36;
+}

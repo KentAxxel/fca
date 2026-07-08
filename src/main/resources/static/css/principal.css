@@ -1331,3 +1331,69 @@ body.modal-open {
         font-size: 13px;
     }
 }
+
+.menu-btn {
+    display: none;
+    border: none;
+    background: transparent;
+    color: #151515;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+@media (max-width: 900px) {
+
+    .navbar {
+        position: relative;
+    }
+
+    .menu-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 16px;
+        right: 16px;
+        background: #ffffff;
+        border-radius: 22px;
+        padding: 18px;
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        list-style: none;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 14px;
+        color: #151515;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .nav-links a:hover {
+        background: #e9f7ee;
+        color: #0b7a36;
+    }
+
+    .access-btn {
+        display: none;
+    }
+}

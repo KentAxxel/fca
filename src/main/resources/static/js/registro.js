@@ -118,3 +118,41 @@ form.addEventListener("submit", async function (e) {
         btnRegistrar.textContent = "Registrar cuenta";
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    configurarMostrarPassword("contrasena", "togglePassword");
+    configurarMostrarPassword("confirmarContrasena", "toggleConfirmPassword");
+});
+
+function configurarMostrarPassword(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+
+    if (!input || !button) {
+        return;
+    }
+
+    button.addEventListener("click", () => {
+        const icon = button.querySelector("i");
+
+        if (input.type === "password") {
+            input.type = "text";
+            button.setAttribute("aria-label", "Ocultar contraseña");
+
+            if (icon) {
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+
+            return;
+        }
+
+        input.type = "password";
+        button.setAttribute("aria-label", "Mostrar contraseña");
+
+        if (icon) {
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    });
+}

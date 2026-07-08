@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="/css/registro.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
 <body>
@@ -103,8 +105,15 @@
                         <div class="form-group">
                             <label for="contrasena">Contraseña <span class="required">*</span></label>
                             <div class="input-wrapper">
-                                <input type="password" id="contrasena" name="contrasena"
-                                    placeholder="Mínimo 8 caracteres" maxlength="50" required>
+                                <div class="password-wrapper">
+                                    <input type="password" id="contrasena" placeholder="Crea una contraseña"
+                                        autocomplete="new-password" required>
+
+                                    <button type="button" class="toggle-password" id="togglePassword"
+                                        aria-label="Mostrar contraseña">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

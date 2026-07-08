@@ -24,14 +24,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   ]);
 });
 function configurarMenuMovil() {
-  const menuBtn = document.getElementById("menuBtn");
-  const navLinks = document.getElementById("navLinks");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
 
-  if (menuBtn && navLinks) {
+    if (!menuBtn || !navLinks) {
+        return;
+    }
+
     menuBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
+        navLinks.classList.toggle("active");
+        menuBtn.classList.toggle("active");
     });
-  }
+
+    const links = navLinks.querySelectorAll("a");
+
+    links.forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+            menuBtn.classList.remove("active");
+        });
+    });
 }
 
 async function obtenerDatos(url) {
