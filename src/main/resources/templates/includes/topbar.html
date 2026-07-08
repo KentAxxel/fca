@@ -1,0 +1,18 @@
+<header class="topbar" th:fragment="topbar(titulo)">
+    <div class="topbar-title">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <h2 th:text="${titulo}">Dashboard</h2>
+    </div>
+
+    <div class="topbar-actions">
+        <button class="icon-btn" onclick="openMessagesModal()" title="Mensajes">
+            💬
+            <span class="notification-dot"></span>
+        </button>
+
+        <button class="user-btn" onclick="openProfileModal()">
+            <span class="user-avatar">👤</span>
+            <strong th:text="${username}">Usuario</strong>
+        </button>
+    </div>
+</header>

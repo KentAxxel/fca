@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cuenta en revisión | FCA UNSM</title>
+    <link rel="stylesheet" href="/css/confirmacion.css" />
+
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="icon">⏳</div>
+        <h1>Cuenta en revisión</h1>
+        <p>
+            Tu cuenta fue creada correctamente, pero todavía tiene rol de INVITADO.
+            Un administrador debe confirmar tus permisos antes de que puedas acceder al panel.
+        </p>
+
+        <div class="actions">
+            <a href="/fca/inicio" class="btn-green">Ir al inicio</a>
+
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <button type="submit" class="btn-dark">
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

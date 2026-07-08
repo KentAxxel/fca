@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}">
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+    <link rel="stylesheet" th:href="@{/css/publicaciones.css}">
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Eventos')}"></span>
+
+        <section class="content">
+            <div class="hero-card">
+                <span>Agenda institucional</span>
+                <h1>Eventos FCA</h1>
+                <p>
+                    Administra los eventos académicos, institucionales y de difusión de la Facultad de Ciencias
+                    Agrarias.
+                </p>
+            </div>
+
+            <div class="stats-grid publicaciones-stats">
+                <div class="stat-card">
+                    <h4>Total de eventos</h4>
+                    <strong id="totalEventos">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Organizadores</h4>
+                    <strong id="totalOrganizadoresEventos">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Lugares registrados</h4>
+                    <strong id="totalLugaresEventos">0</strong>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Listado de eventos</h3>
+                        <p>Registra, edita o elimina eventos institucionales.</p>
+                    </div>
+
+                    <button class="btn-primary" onclick="abrirModalNuevoEvento()">
+                        + Nuevo evento
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" class="search-input" id="buscarEvento"
+                        placeholder="Buscar por título, descripción, fecha, lugar u organizador...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Lugar</th>
+                                <th>Organizador</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaEventos">
+                            <tr>
+                                <td colspan="7" class="empty-row">Cargando eventos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-admin" id="modalEvento">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalTituloEvento">Nuevo evento</h3>
+                    <p id="modalSubtituloEvento">Completa la información del evento.</p>
+                </div>
+
+                <button type="button" class="modal-close" onclick="cerrarModalEvento()">×</button>
+            </div>
+
+            <form id="formEvento">
+                <input type="hidden" id="idevento">
+
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" maxlength="150" placeholder="Ej. Congreso de Ciencias Agrarias">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" class="textarea-large"
+                            placeholder="Describe el evento..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hora">Hora</label>
+                        <input type="time" id="hora">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lugar">Lugar</label>
+                        <input type="text" id="lugar" maxlength="120" placeholder="Ej. Auditorio FCA">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organizador">Organizador</label>
+                        <input type="text" id="organizador" maxlength="120"
+                            placeholder="Ej. Facultad de Ciencias Agrarias">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalEvento()">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-save" id="btnGuardarEvento">
+                        Guardar evento
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/eventos.js}"></script>
+
+</body>
+
+</html>

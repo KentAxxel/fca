@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | FCA UNSM</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <link rel="stylesheet" href="/css/registro.css" />
+
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <a th:href="@{/fca/inicio}" class="brand">
+                <div class="brand-icon">⌘</div>
+                <div class="brand-text">
+                    <h1>FCA</h1>
+                    <span>UNSM</span>
+                </div>
+            </a>
+
+            <a th:href="@{/fca/login}" class="nav-link">Iniciar sesión</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="register-container">
+
+            <div class="welcome-section">
+                <span class="badge">Facultad de Ciencias Agrarias</span>
+
+                <h2>Registro<br>institucional</h2>
+
+                <p>
+                    Crea tu cuenta de acceso al portal de la Facultad de Ciencias Agrarias.
+                    Las cuentas nuevas se registran automáticamente con rol de invitado.
+                </p>
+
+                <div class="features">
+                    <div class="feature">Rol INVITADO</div>
+                    <div class="feature">Validación segura</div>
+                    <div class="feature">Acceso FCA</div>
+                </div>
+            </div>
+
+            <div class="register-card">
+                <div class="card-header">
+                    <div class="icon">🌿</div>
+                    <h3>Crear cuenta</h3>
+                    <p>
+                        Completa tus datos personales. Todos los campos marcados son obligatorios.
+                    </p>
+                </div>
+
+                <form id="registroForm">
+                    <input type="hidden" id="csrfToken" th:value="${_csrf.token}">
+
+                    <input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}">
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+                            <label for="nombre">Nombre completo <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez Ramos"
+                                    maxlength="80" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombreusuario">Usuario <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" id="nombreusuario" name="nombreusuario" placeholder="Ej. jperez"
+                                    maxlength="30" required>
+                            </div>
+                            <small class="input-help">Solo letras, números, punto o guion bajo.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" id="telefono" name="telefono" placeholder="Ej. 987654321"
+                                    maxlength="9" inputmode="numeric" required>
+                            </div>
+                            <small class="input-help">Debe contener exactamente 9 números.</small>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="correo">Correo electrónico <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="email" id="correo" name="correo" placeholder="Ej. usuario@unsm.edu.pe"
+                                    maxlength="100" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contrasena">Contraseña <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="password" id="contrasena" name="contrasena"
+                                    placeholder="Mínimo 8 caracteres" maxlength="50" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmarContrasena">Confirmar contraseña <span
+                                    class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="password" id="confirmarContrasena" name="confirmarContrasena"
+                                    placeholder="Repite tu contraseña" maxlength="50" required>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="password-rules">
+                        <strong>Recomendación:</strong>
+                        usa al menos 8 caracteres, una mayúscula, una minúscula y un número.
+                    </div>
+
+                    <button type="submit" class="btn-register" id="btnRegistrar">
+                        Registrar cuenta
+                    </button>
+                </form>
+
+                <p class="login-text">
+                    ¿Ya tienes una cuenta?
+                    <a th:href="@{/fca/login}">Iniciar sesión</a>
+                </p>
+
+                <div class="footer-note">
+                    Tu cuenta será creada con rol <strong>INVITADO</strong>. Un administrador podrá actualizar tus
+                    permisos si corresponde.
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script src="/js/registro.js"></script>
+</body>
+
+</html>

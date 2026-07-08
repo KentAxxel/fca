@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorios | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}">
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+    <link rel="stylesheet" th:href="@{/css/laboratorios.css}">
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+<main class="main">
+    <span th:replace="~{includes/topbar :: topbar('Laboratorios')}"></span>
+
+    <section class="content">
+        <div class="hero-card">
+            <span>Infraestructura académica</span>
+            <h1>Laboratorios FCA</h1>
+            <p>
+                Administra los laboratorios de la Facultad de Ciencias Agrarias, su ubicación,
+                descripción e imagen representativa.
+            </p>
+        </div>
+
+        <div class="stats-grid laboratorios-stats">
+            <div class="stat-card">
+                <h4>Total de laboratorios</h4>
+                <strong id="totalLaboratorios">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Con imagen</h4>
+                <strong id="totalConImagen">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Ubicaciones registradas</h4>
+                <strong id="totalUbicaciones">0</strong>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <h3>Listado de laboratorios</h3>
+                    <p>Registra, edita o elimina laboratorios institucionales.</p>
+                </div>
+
+                <button class="btn-primary" onclick="abrirModalNuevoLaboratorio()">
+                    + Nuevo laboratorio
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <input type="text"
+                       class="search-input"
+                       id="buscarLaboratorio"
+                       placeholder="Buscar por nombre, descripción o ubicación...">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Ubicación</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tablaLaboratorios">
+                    <tr>
+                        <td colspan="5" class="empty-row">Cargando laboratorios...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal-admin" id="modalLaboratorio">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h3 id="modalTituloLaboratorio">Nuevo laboratorio</h3>
+                <p id="modalSubtituloLaboratorio">Completa la información del laboratorio.</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="cerrarModalLaboratorio()">×</button>
+        </div>
+
+        <form id="formLaboratorio">
+            <input type="hidden" id="idlaboratorio">
+            <input type="hidden" id="imagen">
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="nombrelaboratorio">Nombre del laboratorio</label>
+                    <input type="text"
+                           id="nombrelaboratorio"
+                           maxlength="150"
+                           placeholder="Ej. Laboratorio de Suelos">
+                </div>
+
+                <div class="form-group full">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion"
+                              class="textarea-large"
+                              placeholder="Describe el laboratorio, sus equipos o finalidad académica..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label for="ubicacion">Ubicación</label>
+                    <input type="text"
+                           id="ubicacion"
+                           maxlength="150"
+                           placeholder="Ej. Pabellón FCA - Primer piso">
+                </div>
+
+                <div class="form-group full">
+                    <label for="imagenArchivo">Imagen</label>
+                    <input type="file"
+                           id="imagenArchivo"
+                           accept="image/png, image/jpeg, image/webp">
+                    <small>
+                        Formatos permitidos: JPG, PNG o WEBP. Tamaño máximo: 10 MB.
+                    </small>
+                </div>
+
+                <div class="preview-box full">
+                    <span>Vista previa</span>
+                    <img id="previewImagenLaboratorio"
+                         src="/images/default-lab.png"
+                         alt="Vista previa de laboratorio">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cerrarModalLaboratorio()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn-save" id="btnGuardarLaboratorio">
+                    Guardar laboratorio
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<span th:replace="~{includes/modalperfil :: profileModal}"></span>
+<span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+<script th:src="@{/js/adminperfil.js}"></script>
+<script th:src="@{/js/laboratorios.js}"></script>
+
+</body>
+</html>

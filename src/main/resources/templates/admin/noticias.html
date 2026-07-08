@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}">
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+    <link rel="stylesheet" th:href="@{/css/publicaciones.css}">
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+<main class="main">
+    <span th:replace="~{includes/topbar :: topbar('Noticias')}"></span>
+
+    <section class="content">
+        <div class="hero-card">
+            <span>Publicaciones institucionales</span>
+            <h1>Noticias FCA</h1>
+            <p>
+                Administra las noticias visibles en el portal institucional de la Facultad de Ciencias Agrarias.
+            </p>
+        </div>
+
+        <div class="stats-grid publicaciones-stats">
+            <div class="stat-card">
+                <h4>Total de noticias</h4>
+                <strong id="totalNoticias">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Con imagen</h4>
+                <strong id="totalNoticiasImagen">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Autores registrados</h4>
+                <strong id="totalAutoresNoticias">0</strong>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <h3>Listado de noticias</h3>
+                    <p>Registra, edita o elimina noticias institucionales.</p>
+                </div>
+
+                <button class="btn-primary" onclick="abrirModalNuevaNoticia()">
+                    + Nueva noticia
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <input type="text"
+                       class="search-input"
+                       id="buscarNoticia"
+                       placeholder="Buscar por título, resumen, autor o fecha...">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Título</th>
+                        <th>Resumen</th>
+                        <th>Fecha</th>
+                        <th>Autor</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tablaNoticias">
+                    <tr>
+                        <td colspan="6" class="empty-row">Cargando noticias...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal-admin" id="modalNoticia">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h3 id="modalTituloNoticia">Nueva noticia</h3>
+                <p id="modalSubtituloNoticia">Completa la información de la noticia.</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="cerrarModalNoticia()">×</button>
+        </div>
+
+        <form id="formNoticia">
+            <input type="hidden" id="idnoticia">
+            <input type="hidden" id="imagen">
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="titulo">Título</label>
+                    <input type="text"
+                           id="titulo"
+                           maxlength="150"
+                           placeholder="Ej. FCA desarrolla jornada académica">
+                </div>
+
+                <div class="form-group full">
+                    <label for="resumen">Resumen</label>
+                    <textarea id="resumen"
+                              maxlength="300"
+                              placeholder="Escribe un resumen breve de la noticia..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label for="contenido">Contenido</label>
+                    <textarea id="contenido"
+                              class="textarea-large"
+                              placeholder="Escribe el contenido completo de la noticia..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" id="fecha">
+                </div>
+
+                <div class="form-group">
+                    <label for="autor">Autor</label>
+                    <input type="text"
+                           id="autor"
+                           maxlength="100"
+                           placeholder="Ej. Oficina de Imagen Institucional">
+                </div>
+
+                <div class="form-group full">
+                    <label for="imagenArchivo">Imagen</label>
+                    <input type="file"
+                           id="imagenArchivo"
+                           accept="image/png, image/jpeg, image/webp">
+                    <small>
+                        Formatos permitidos: JPG, PNG o WEBP. Tamaño máximo: 10 MB.
+                    </small>
+                </div>
+
+                <div class="preview-box full">
+                    <span>Vista previa</span>
+                    <img id="previewImagenNoticia"
+                         src="/images/default-news.png"
+                         alt="Vista previa de noticia">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cerrarModalNoticia()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn-save" id="btnGuardarNoticia">
+                    Guardar noticia
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<span th:replace="~{includes/modalperfil :: profileModal}"></span>
+<span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+<script th:src="@{/js/adminperfil.js}"></script>
+<script th:src="@{/js/noticias.js}"></script>
+
+</body>
+</html>

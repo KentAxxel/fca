@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoridades | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}" />
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Autoridades')}"></span>
+
+        <section class="content">
+            <div class="hero-card">
+                <span>Gestión institucional</span>
+                <h1>Autoridades FCA</h1>
+                <p>
+                    Administra la información de decanos, directores, coordinadores y demás autoridades
+                    visibles en el portal institucional.
+                </p>
+            </div>
+
+            <div class="stats-grid autoridades-stats">
+                <div class="stat-card">
+                    <h4>Total de autoridades</h4>
+                    <strong id="totalAutoridades">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Con correo registrado</h4>
+                    <strong id="totalConCorreo">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Con fotografía</h4>
+                    <strong id="totalConFoto">0</strong>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Listado de autoridades</h3>
+                        <p>Registra, edita o elimina autoridades institucionales.</p>
+                    </div>
+
+                    <button class="btn-primary" onclick="abrirModalNuevaAutoridad()">
+                        + Nueva autoridad
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" class="search-input" id="buscarAutoridad"
+                        placeholder="Buscar por nombre, cargo o correo...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Correo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaAutoridades">
+                            <tr>
+                                <td colspan="5" class="empty-row">Cargando autoridades...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-admin" id="modalAutoridad">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalTitulo">Nueva autoridad</h3>
+                    <p id="modalSubtitulo">Completa la información de la autoridad.</p>
+                </div>
+
+                <button type="button" class="modal-close" onclick="cerrarModalAutoridad()">×</button>
+            </div>
+
+            <form id="formAutoridad">
+                <input type="hidden" id="idautoridad">
+
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="autoridad">Nombre de la autoridad</label>
+                        <input type="text" id="autoridad" maxlength="100"
+                            placeholder="Ej. Dra. María Rodríguez Vásquez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cargo">Cargo</label>
+                        <input type="text" id="cargo" maxlength="100" placeholder="Ej. Decana">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" maxlength="120" placeholder="Ej. decana.fca@unsm.edu.pe">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="fotoArchivo">Foto</label>
+
+                        <input type="file" id="fotoArchivo" accept="image/png, image/jpeg, image/webp">
+
+                        <input type="hidden" id="foto">
+
+                        <small>
+                            Formatos permitidos: JPG, PNG o WEBP. Tamaño máximo recomendado: 2 MB.
+                        </small>
+                    </div>
+
+                    <div class="preview-box full">
+                        <span>Vista previa</span>
+                        <img id="previewFoto" src="/images/default-user.png" alt="Vista previa de autoridad">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalAutoridad()">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-save" id="btnGuardarAutoridad">
+                        Guardar autoridad
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/autoridades.js}"></script>
+
+</body>
+
+</html>

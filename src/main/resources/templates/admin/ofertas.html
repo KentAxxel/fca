@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolsa laboral | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}">
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+    <link rel="stylesheet" th:href="@{/css/ofertas.css}">
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Bolsa laboral')}"></span>
+
+        <section class="content">
+            <div class="hero-card">
+                <span>Oportunidades profesionales</span>
+                <h1>Ofertas laborales FCA</h1>
+                <p>
+                    Administra las ofertas laborales publicadas por empresas vinculadas con la Facultad de Ciencias
+                    Agrarias.
+                </p>
+            </div>
+
+            <div class="stats-grid ofertas-stats">
+                <div class="stat-card">
+                    <h4>Total de ofertas</h4>
+                    <strong id="totalOfertas">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Ofertas activas</h4>
+                    <strong id="totalActivas">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Empresas disponibles</h4>
+                    <strong id="totalEmpresas">0</strong>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Listado de ofertas laborales</h3>
+                        <p>Registra, edita o elimina oportunidades laborales.</p>
+                    </div>
+
+                    <button class="btn-primary" onclick="abrirModalNuevaOferta()">
+                        + Nueva oferta
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" class="search-input" id="buscarOferta"
+                        placeholder="Buscar por título, empresa, modalidad, estado o ubicación...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Empresa</th>
+                                <th>Modalidad</th>
+                                <th>Vacantes</th>
+                                <th>Salario</th>
+                                <th>Estado</th>
+                                <th>Fecha límite</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaOfertas">
+                            <tr>
+                                <td colspan="8" class="empty-row">Cargando ofertas laborales...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-admin" id="modalOferta">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalTituloOferta">Nueva oferta laboral</h3>
+                    <p id="modalSubtituloOferta">Completa la información de la oferta.</p>
+                </div>
+
+                <button type="button" class="modal-close" onclick="cerrarModalOferta()">×</button>
+            </div>
+
+            <form id="formOferta">
+                <input type="hidden" id="idoferta">
+
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="titulo">Título de la oferta</label>
+                        <input type="text" id="titulo" maxlength="150"
+                            placeholder="Ej. Asistente de producción agrícola">
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" class="textarea-large"
+                            placeholder="Describe las funciones, requisitos y beneficios de la oferta..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idempresa">Empresa</label>
+                        <select id="idempresa">
+                            <option value="">Cargando empresas...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalidad">Modalidad</label>
+                        <select id="modalidad">
+                            <option value="">Seleccione modalidad</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Remoto">Remoto</option>
+                            <option value="Híbrido">Híbrido</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaPublicacion">Fecha de publicación</label>
+                        <input type="date" id="fechaPublicacion">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechalimite">Fecha límite</label>
+                        <input type="date" id="fechalimite">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vacantes">Vacantes</label>
+                        <input type="number" id="vacantes" min="1" placeholder="Ej. 3">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salario">Salario</label>
+                        <input type="number" id="salario" min="0" step="0.01" placeholder="Ej. 1500">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select id="estado">
+                            <option value="">Seleccione estado</option>
+                            <option value="ACTIVO">ACTIVO</option>
+                            <option value="INACTIVO">INACTIVO</option>
+                            <option value="CERRADO">CERRADO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ubicacion">Ubicación</label>
+                        <input type="text" id="ubicacion" maxlength="150" placeholder="Ej. Tarapoto, San Martín">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalOferta()">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-save" id="btnGuardarOferta">
+                        Guardar oferta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/ofertas.js}"></script>
+
+</body>
+
+</html>

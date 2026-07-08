@@ -1,0 +1,47 @@
+<div class="modal-overlay" id="messagesModal" th:fragment="messagesModal">
+    <div class="messages-modal">
+        <div class="modal-header">
+            <div>
+                <h3>Mensajes</h3>
+                <p style="color:#666; margin-top:6px;">
+                    Centro de notificaciones del panel.
+                </p>
+            </div>
+
+            <button class="close-btn" onclick="closeMessagesModal()">×</button>
+        </div>
+
+        <div class="message-list">
+            <div class="message-item">
+                <strong>
+                    Bienvenido al panel
+                    <span>Nuevo</span>
+                </strong>
+                <p>
+                    Tu sesión está activa. Puedes gestionar los módulos disponibles desde el menú lateral.
+                </p>
+            </div>
+
+            <div class="message-item">
+                <strong>
+                    Usuarios invitados
+                    <span>Importante</span>
+                </strong>
+                <p>
+                    Los nuevos registros se crean automáticamente con rol INVITADO.
+                    Revisa sus permisos cuando sea necesario.
+                </p>
+            </div>
+
+            <div class="message-item">
+                <strong>
+                    Seguridad de cuenta
+                    <span>Activo</span>
+                </strong>
+                <p>
+                    El sistema mantiene control de sesiones y permisos según el rol asignado.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

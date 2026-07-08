@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facultad de Ciencias Agrarias - Universidad Nacional de San Martín</title>
+
+    <link rel="stylesheet" href="/css/principal.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div>
+                    <h1>FCA</h1>
+                    <span>UNSM</span>
+                </div>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#autoridades">Autoridades</a></li>
+                <li><a href="#noticias">Noticias</a></li>
+                <li><a href="#eventos">Eventos</a></li>
+                <li><a href="#laboratorios">Laboratorios</a></li>
+                <li><a href="#comisiones">Comisiones</a></li>
+                <li><a href="#bolsa">Bolsa Laboral</a></li>
+                <li><a href="#empresas">Empresas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <span class="hero-badge">Universidad Nacional de San Martín</span>
+            <h2>Facultad de Ciencias Agrarias</h2>
+            <p>
+                Formamos profesionales comprometidos con la innovación, la investigación
+                y el desarrollo sostenible del sector agrario.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#noticias" class="btn btn-primary">Ver noticias</a>
+                <a href="#bolsa" class="btn btn-secondary">Bolsa laboral</a>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <h3>Portal institucional</h3>
+            <p>
+                Noticias, eventos, autoridades, laboratorios, comisiones y oportunidades
+                laborales en un solo lugar.
+            </p>
+
+            <div class="hero-stats">
+                <div>
+                    <strong>1200+</strong>
+                    <span>Estudiantes</span>
+                </div>
+                <div>
+                    <strong>12</strong>
+                    <span>Laboratorios</span>
+                </div>
+                <div>
+                    <strong>2</strong>
+                    <span>Programas</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCESOS RÁPIDOS -->
+    <section class="quick-section">
+        <div class="quick-card">
+            <i class="fa-solid fa-newspaper"></i>
+            <h3>Noticias</h3>
+            <p>Actualidad académica e institucional.</p>
+        </div>
+
+        <div class="quick-card">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h3>Eventos</h3>
+            <p>Conferencias, charlas y actividades.</p>
+        </div>
+
+        <div class="quick-card">
+            <i class="fa-solid fa-flask"></i>
+            <h3>Laboratorios</h3>
+            <p>Espacios de investigación y práctica.</p>
+        </div>
+
+        <div class="quick-card">
+            <i class="fa-solid fa-briefcase"></i>
+            <h3>Bolsa laboral</h3>
+            <p>Ofertas y prácticas profesionales.</p>
+        </div>
+    </section>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <section class="section split-section">
+        <div>
+            <span class="section-label">Nuestra facultad</span>
+            <h2>Misión y visión</h2>
+            <p>
+                La Facultad de Ciencias Agrarias promueve la formación profesional,
+                investigación aplicada y responsabilidad social para contribuir al
+                desarrollo agrario sostenible de la región y del país.
+            </p>
+        </div>
+
+        <div class="mission-grid">
+            <article class="info-box">
+                <h3>Misión</h3>
+                <p>
+                    Formar profesionales competentes en ciencias agrarias, capaces de
+                    generar soluciones sostenibles para el desarrollo productivo.
+                </p>
+            </article>
+
+            <article class="info-box dark">
+                <h3>Visión</h3>
+                <p>
+                    Ser una facultad referente en innovación, investigación y transferencia
+                    tecnológica en el ámbito agrario.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- AUTORIDADES -->
+    <section class="section" id="autoridades">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Gestión institucional</span>
+                <h2>Autoridades</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Conoce a quienes lideran nuestra facultad.</p>
+                <a href="/fca/autoridades" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="cards-grid four-columns" id="autoridadesContainer"></div>
+    </section>
+
+    <!-- NOTICIAS -->
+    <section class="section gray-section" id="noticias">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Actualidad</span>
+                <h2>Noticias recientes</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Información relevante de la comunidad académica.</p>
+                <a href="/fca/noticias" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="todas">Todas</button>
+            <button class="filter-btn" data-filter="investigacion">Investigación</button>
+            <button class="filter-btn" data-filter="academico">Académico</button>
+            <button class="filter-btn" data-filter="institucional">Institucional</button>
+        </div>
+
+        <div class="cards-grid" id="noticiasContainer"></div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="section" id="eventos">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Agenda</span>
+                <h2>Eventos y acontecimientos</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Actividades próximas de la Facultad de Ciencias Agrarias.</p>
+                <a href="/fca/eventos" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="timeline" id="eventosContainer"></div>
+    </section>
+
+    <!-- LABORATORIOS -->
+    <section class="section gray-section" id="laboratorios">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Infraestructura</span>
+                <h2>Laboratorios</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Ambientes especializados para la formación e investigación.</p>
+                <a href="/fca/laboratorios" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="cards-grid" id="laboratoriosContainer"></div>
+    </section>
+
+    <!-- COMISIONES -->
+    <section class="section" id="comisiones">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Organización</span>
+                <h2>Comisiones</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Equipos encargados de fortalecer la gestión académica.</p>
+                <a href="/fca/comisiones" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="cards-grid four-columns" id="comisionesContainer"></div>
+
+        <div class="cards-grid" id="comisionesContainer"></div>
+    </section>
+
+    <!-- BOLSA LABORAL -->
+    <section class="section gray-section" id="bolsa">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Oportunidades</span>
+                <h2>Bolsa laboral</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Ofertas laborales, prácticas y convocatorias para estudiantes y egresados.</p>
+                <a href="/fca/bolsa-laboral" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="job-list" id="ofertasContainer"></div>
+    </section>
+
+    <!-- EMPRESAS -->
+    <section class="section" id="empresas">
+        <div class="section-header">
+            <div>
+                <span class="section-label">Aliados estratégicos</span>
+                <h2>Empresas vinculadas</h2>
+            </div>
+
+            <div class="section-actions">
+                <p>Instituciones que colaboran con nuestra comunidad universitaria.</p>
+                <a href="/fca/empresas" class="btn-see-all">Ver todo</a>
+            </div>
+        </div>
+
+        <div class="cards-grid four-columns" id="empresasContainer"></div>
+
+        <div class="cards-grid" id="empresasContainer"></div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section contact-section" id="contacto">
+        <div class="contact-info">
+            <span class="section-label">Contáctanos</span>
+            <h2>Facultad de Ciencias Agrarias - UNSM</h2>
+            <p>
+                Para consultas académicas, administrativas o institucionales, comunícate
+                con nosotros.
+            </p>
+
+            <ul>
+                <li><i class="fa-solid fa-location-dot"></i> Ciudad Universitaria, Tarapoto, San Martín</li>
+                <li><i class="fa-solid fa-envelope"></i> agrarias@unsm.edu.pe</li>
+                <li><i class="fa-solid fa-phone"></i> +51 900 000 000</li>
+            </ul>
+        </div>
+
+        <form class="contact-form">
+            <input type="text" placeholder="Nombres y apellidos" required />
+            <input type="email" placeholder="Correo electrónico" required />
+            <input type="text" placeholder="Asunto" required />
+            <textarea placeholder="Mensaje" required></textarea>
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div>
+            <h3>Facultad de Ciencias Agrarias</h3>
+            <p>Universidad Nacional de San Martín</p>
+        </div>
+
+        <div class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=100066629837717&sk=directory_intro"><i
+                    class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <!-- MODAL PARA PERFILES RELACIONADOS -->
+    <div class="modal" id="publicModal">
+        <div class="modal-content public-modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="/js/principal.js"></script>
+</body>
+
+</html>

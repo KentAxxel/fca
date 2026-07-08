@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresas | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/autoridades.css}">
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+    <link rel="stylesheet" th:href="@{/css/empresas.css}">
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+<main class="main">
+    <span th:replace="~{includes/topbar :: topbar('Empresas')}"></span>
+
+    <section class="content">
+        <div class="hero-card">
+            <span>Vinculación institucional</span>
+            <h1>Empresas FCA</h1>
+            <p>
+                Administra las empresas aliadas o vinculadas con la Facultad de Ciencias Agrarias,
+                registrando su información de contacto, rubro y logo institucional.
+            </p>
+        </div>
+
+        <div class="stats-grid empresas-stats">
+            <div class="stat-card">
+                <h4>Total de empresas</h4>
+                <strong id="totalEmpresas">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Con logo</h4>
+                <strong id="totalConLogo">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <h4>Rubros registrados</h4>
+                <strong id="totalRubros">0</strong>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <h3>Listado de empresas</h3>
+                    <p>Registra, edita o elimina empresas vinculadas a la facultad.</p>
+                </div>
+
+                <button class="btn-primary" onclick="abrirModalNuevaEmpresa()">
+                    + Nueva empresa
+                </button>
+            </div>
+
+            <div class="toolbar">
+                <input type="text"
+                       class="search-input"
+                       id="buscarEmpresa"
+                       placeholder="Buscar por empresa, RUC, correo, teléfono, rubro o dirección...">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Logo</th>
+                        <th>Empresa</th>
+                        <th>RUC</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Rubro</th>
+                        <th>Dirección</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="tablaEmpresas">
+                    <tr>
+                        <td colspan="8" class="empty-row">Cargando empresas...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal-admin" id="modalEmpresa">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h3 id="modalTituloEmpresa">Nueva empresa</h3>
+                <p id="modalSubtituloEmpresa">Completa la información de la empresa.</p>
+            </div>
+
+            <button type="button" class="modal-close" onclick="cerrarModalEmpresa()">×</button>
+        </div>
+
+        <form id="formEmpresa">
+            <input type="hidden" id="idempresa">
+            <input type="hidden" id="logo">
+
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="nombreempresa">Nombre de la empresa</label>
+                    <input type="text"
+                           id="nombreempresa"
+                           maxlength="150"
+                           placeholder="Ej. Agroindustrias San Martín S.A.C.">
+                </div>
+
+                <div class="form-group">
+                    <label for="ruc">RUC</label>
+                    <input type="text"
+                           id="ruc"
+                           maxlength="11"
+                           placeholder="Ej. 20123456789">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text"
+                           id="telefono"
+                           maxlength="9"
+                           placeholder="Ej. 987654321">
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email"
+                           id="correo"
+                           maxlength="120"
+                           placeholder="Ej. contacto@empresa.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="rubro">Rubro</label>
+                    <input type="text"
+                           id="rubro"
+                           maxlength="120"
+                           placeholder="Ej. Agroindustria">
+                </div>
+
+                <div class="form-group full">
+                    <label for="direccion">Dirección</label>
+                    <input type="text"
+                           id="direccion"
+                           maxlength="180"
+                           placeholder="Ej. Jr. San Martín 123 - Tarapoto">
+                </div>
+
+                <div class="form-group full">
+                    <label for="logoArchivo">Logo</label>
+                    <input type="file"
+                           id="logoArchivo"
+                           accept="image/png, image/jpeg, image/webp">
+                    <small>
+                        Formatos permitidos: JPG, PNG o WEBP. Tamaño máximo: 10 MB.
+                    </small>
+                </div>
+
+                <div class="preview-box full">
+                    <span>Vista previa</span>
+                    <img id="previewLogoEmpresa"
+                         src="/images/default-company.png"
+                         alt="Vista previa de empresa">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cerrarModalEmpresa()">
+                    Cancelar
+                </button>
+
+                <button type="submit" class="btn-save" id="btnGuardarEmpresa">
+                    Guardar empresa
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<span th:replace="~{includes/modalperfil :: profileModal}"></span>
+<span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
+<script th:src="@{/js/adminperfil.js}"></script>
+<script th:src="@{/js/empresas.js}"></script>
+
+</body>
+</html>

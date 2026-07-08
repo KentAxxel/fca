@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Panel FCA</title>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+
+</head>
+
+<body>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
+
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Dashboard')}"></span>
+
+        <section class="content">
+
+            <div class="welcome-card">
+                <div>
+                    <span class="welcome-badge">Bienvenido al panel FCA</span>
+                    <h1>
+                        Hola,
+                        <span th:text="${nombreUsuarioSesion}">Usuario</span>
+                    </h1>
+                    <p>
+                        Desde este panel puedes administrar autoridades, usuarios, roles,
+                        laboratorios, publicaciones, empresas, comisiones y demás información
+                        institucional de la Facultad de Ciencias Agrarias.
+                    </p>
+                </div>
+
+                <div class="welcome-mini">
+                    <strong th:text="${rol}">ADMIN</strong>
+                    <span>Rol activo en el sistema</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <h4>Usuarios registrados</h4>
+                    <strong id="totalUsuarios">0</strong>
+                    <p>Actualizado desde el sistema</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📰</div>
+                    <h4>Publicaciones</h4>
+                    <strong id="totalPublicaciones">0</strong>
+                    <p>Noticias, eventos y bolsa laboral</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🏛️</div>
+                    <h4>Autoridades</h4>
+                    <strong id="totalAutoridades">2</strong>
+                    <p>Autoridades visibles</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🧪</div>
+                    <h4>Laboratorios</h4>
+                    <strong id="totalLaboratorios">12</strong>
+                    <p>Espacios académicos</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Accesos rápidos</h3>
+                                <p>Ingresa directamente a los módulos principales.</p>
+                            </div>
+                        </div>
+
+                        <div class="quick-grid">
+                            <a th:href="@{/fca/admin/autoridades}" class="quick-card">
+                                <span>🏛️</span>
+                                <strong>Autoridades</strong>
+                                <small>Gestiona autoridades institucionales.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/usuarios}" class="quick-card">
+                                <span>👥</span>
+                                <strong>Usuarios y roles</strong>
+                                <small>Administra cuentas y permisos.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/noticias}" class="quick-card">
+                                <span>📰</span>
+                                <strong>Noticias</strong>
+                                <small>Publica novedades institucionales.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/eventos}" class="quick-card">
+                                <span>📅</span>
+                                <strong>Eventos</strong>
+                                <small>Registra actividades académicas.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/laboratorios}" class="quick-card">
+                                <span>🧪</span>
+                                <strong>Laboratorios</strong>
+                                <small>Administra ambientes y servicios.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/bolsa-laboral}" class="quick-card">
+                                <span>💼</span>
+                                <strong>Bolsa laboral</strong>
+                                <small>Publica oportunidades laborales.</small>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Actividad reciente</h3>
+                                <p>Resumen de acciones y cambios dentro del panel.</p>
+                            </div>
+                        </div>
+
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">✅</div>
+                                <div>
+                                    <strong>Sesión iniciada correctamente</strong>
+                                    <p>Has ingresado al panel administrativo de la Facultad de Ciencias Agrarias.</p>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">👥</div>
+                                <div>
+                                    <strong>Usuarios disponibles</strong>
+                                    <p>El módulo de usuarios y roles ya está conectado a la API del sistema.</p>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">🛡️</div>
+                                <div>
+                                    <strong>Acceso protegido</strong>
+                                    <p>Solo usuarios con rol ADMIN o AUTOR pueden ingresar a esta zona.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Mensajes</h3>
+                                <p>Notificaciones y avisos administrativos.</p>
+                            </div>
+
+                            <button class="btn-primary" onclick="openMessagesModal()">Ver todo</button>
+                        </div>
+
+                        <div class="message-list">
+                            <div class="message-item">
+                                <strong>
+                                    Sistema FCA
+                                    <span>Nuevo</span>
+                                </strong>
+                                <p>Recuerda revisar las cuentas nuevas registradas como INVITADO.</p>
+                            </div>
+
+                            <div class="message-item">
+                                <strong>
+                                    Seguridad
+                                    <span>Hoy</span>
+                                </strong>
+                                <p>El sistema mantiene una sola sesión activa por usuario.</p>
+                            </div>
+
+                            <div class="message-item">
+                                <strong>
+                                    Publicaciones
+                                    <span>Pendiente</span>
+                                </strong>
+                                <p>Agrega noticias, eventos o convocatorias para mantener actualizado el portal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Resumen de publicaciones</h3>
+                                <p>Vista general del contenido institucional.</p>
+                            </div>
+                        </div>
+
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">📰</div>
+                                <div>
+                                    <strong>Noticias</strong>
+                                    <p><span id="totalNoticias">0</span> publicaciones registradas.</p>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">📅</div>
+                                <div>
+                                    <strong>Eventos</strong>
+                                    <p><span id="totalEventos">0</span> eventos registrados.</p>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">💼</div>
+                                <div>
+                                    <strong>Bolsa laboral</strong>
+                                    <p><span id="totalBolsa">0</span> oportunidades publicadas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="profileModal">
+        <div class="profile-modal">
+            <div class="modal-header">
+                <div>
+                    <h3>Perfil de usuario</h3>
+                    <p style="color:#666; margin-top:6px;">Información de la sesión actual.</p>
+                </div>
+
+                <button class="close-btn" onclick="closeProfileModal()">×</button>
+            </div>
+
+            <div class="profile-box">
+                <div class="profile-avatar">👤</div>
+                <h4 th:text="${username}">adminfca</h4>
+                <p th:text="${rol}">ADMIN</p>
+            </div>
+
+            <div class="profile-info">
+                <div>
+                    <span>Usuario</span>
+                    <strong th:text="${username}">adminfca</strong>
+                </div>
+
+                <div>
+                    <span>Rol</span>
+                    <strong th:text="${rol}">ADMIN</strong>
+                </div>
+
+                <div>
+                    <span>Estado</span>
+                    <strong>Sesión activa</strong>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-green" onclick="closeProfileModal()">Continuar</button>
+                <form th:action="@{/logout}" method="post" class="logout-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                    <button type="submit" class="btn-dark">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="messagesModal">
+        <div class="messages-modal">
+            <div class="modal-header">
+                <div>
+                    <h3>Mensajes</h3>
+                    <p style="color:#666; margin-top:6px;">Centro de notificaciones del panel.</p>
+                </div>
+
+                <button class="close-btn" onclick="closeMessagesModal()">×</button>
+            </div>
+
+            <div class="message-list">
+                <div class="message-item">
+                    <strong>
+                        Bienvenido al panel
+                        <span>Nuevo</span>
+                    </strong>
+                    <p>Tu sesión se inició correctamente. Puedes gestionar los módulos disponibles desde el menú
+                        lateral.</p>
+                </div>
+
+                <div class="message-item">
+                    <strong>
+                        Usuarios invitados
+                        <span>Importante</span>
+                    </strong>
+                    <p>Los nuevos registros se crean automáticamente con rol INVITADO. Revisa sus permisos cuando sea
+                        necesario.</p>
+                </div>
+
+                <div class="message-item">
+                    <strong>
+                        Seguridad de cuenta
+                        <span>Activo</span>
+                    </strong>
+                    <p>El sistema bloquea nuevas sesiones cuando la cuenta ya se encuentra activa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
+
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+</body>
+
+</html>

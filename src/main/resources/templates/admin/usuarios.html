@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios y roles | Panel FCA</title>
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}" />
+    <link rel="stylesheet" th:href="@{/css/adminperfil.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
+
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Roles y usuarios')}"></span>
+
+        <section class="content">
+            <div class="hero-card">
+                <span>Seguridad y permisos</span>
+                <h1>Usuarios del sistema</h1>
+                <p>
+                    Administra las cuentas registradas en el portal FCA, revisa sus datos
+                    y controla los roles asignados a cada usuario.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total de usuarios</h4>
+                    <strong id="totalUsuarios">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Administradores</h4>
+                    <strong id="totalAdmin">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Autores</h4>
+                    <strong id="totalAutores">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Invitados</h4>
+                    <strong id="totalInvitados">0</strong>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Listado de usuarios</h3>
+                        <p>Consulta usuarios registrados y administra sus permisos.</p>
+                    </div>
+
+                    <button class="btn-primary" onclick="abrirModalCrear()">+ Nuevo usuario</button>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" class="search-input" id="buscarUsuario"
+                        placeholder="Buscar por nombre, usuario, correo o rol...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Usuario</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaUsuarios">
+                            <tr>
+                                <td colspan="6">Cargando usuarios...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Roles disponibles</h3>
+                        <p>Roles usados para controlar permisos dentro del sistema.</p>
+                    </div>
+
+                    <button class="btn-secondary" onclick="cargarRoles()">Actualizar roles</button>
+                </div>
+
+                <div class="roles-grid" id="rolesGrid">
+                    <div class="role-card">
+                        <strong>Cargando...</strong>
+                        <span>Obteniendo roles del sistema.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-admin" id="modalUsuario">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalTitulo">Nuevo usuario</h3>
+                    <p id="modalSubtitulo">Completa los datos del usuario.</p>
+                </div>
+
+                <button type="button" class="modal-close" onclick="cerrarModalUsuario()">×</button>
+            </div>
+
+            <form id="formUsuario">
+                <input type="hidden" id="idusuario">
+
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" maxlength="80" placeholder="Ej. Juan Pérez Ramos">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombreusuario">Usuario</label>
+                        <input type="text" id="nombreusuario" maxlength="30" placeholder="Ej. jperez">
+                        <small>Solo letras, números, punto o guion bajo.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" id="telefono" maxlength="9" inputmode="numeric" placeholder="Ej. 987654321">
+                        <small>Debe tener exactamente 9 números.</small>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" maxlength="100" placeholder="Ej. usuario@unsm.edu.pe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" maxlength="50" placeholder="Mínimo 8 caracteres">
+                        <small id="passwordHelp">Obligatoria al crear. Opcional al editar.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idrol">Rol</label>
+                        <select id="idrol">
+                            <option value="">Cargando roles...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalUsuario()">Cancelar</button>
+                    <button type="submit" class="btn-save" id="btnGuardarUsuario">Guardar usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <<script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/usuarios.js}"></script>
+
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias | FCA UNSM</title>
+
+    <link rel="stylesheet" href="/css/public.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body data-module="noticias">
+
+    <header class="public-header">
+        <nav class="public-nav">
+            <a href="/fca/inicio" class="public-logo">
+                <div class="logo-icon"><i class="fa-solid fa-seedling"></i></div>
+                <div>
+                    <h1>FCA</h1><span>UNSM</span>
+                </div>
+            </a>
+
+            <a href="/fca/inicio" class="back-link">Volver al inicio</a>
+        </nav>
+    </header>
+
+    <section class="public-hero">
+        <span id="publicLabel">Actualidad institucional</span>
+        <h2 id="publicTitle">Noticias</h2>
+        <p id="publicDescription">Revisa las noticias publicadas por la facultad.</p>
+    </section>
+
+    <main class="public-content">
+        <div class="public-toolbar">
+            <input type="text" class="public-search" id="publicSearch" placeholder="Buscar...">
+            <span class="counter-badge" id="publicCounter">0 registro(s)</span>
+        </div>
+
+        <div class="public-grid" id="publicListContainer"></div>
+    </main>
+
+    <div class="modal" id="publicModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/public.js}"></script>
+
+</body>
+
+</html>

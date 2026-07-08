@@ -1,0 +1,31 @@
+    <aside class="sidebar" id="sidebar"> 
+        <a th:href="@{/fca/admin/inicio}" class="brand">
+            <div class="brand-icon">🌱</div>
+            <div>
+                <h1>FCA</h1>
+                <span>Panel administrativo</span>
+            </div>
+        </a>
+
+        <div class="menu-title">Módulos</div>
+
+        <a th:href="@{/fca/admin/inicio}" class="menu-link">Inicio</a>
+        <a th:href="@{/fca/admin/autoridades}" class="menu-link">Autoridades</a>
+        <a th:href="@{/fca/admin/comisiones}" class="menu-link">Comisiones</a>
+        <a th:href="@{/fca/admin/empresas}" class="menu-link">Empresas</a>
+        <a th:href="@{/fca/admin/laboratorios}" class="menu-link">Laboratorios</a>
+        <a th:href="@{/fca/admin/usuarios}" class="menu-link" sec:authorize="hasRole('ADMIN')">Roles y usuarios</a>
+
+        <div class="menu-title">Contenido</div>
+
+        <button class="submenu-toggle" type="button" onclick="toggleSubmenu()">
+            Publicaciones
+            <span>▾</span>
+        </button>
+
+        <div class="submenu" id="submenuPublicaciones">
+            <a th:href="@{/fca/admin/noticias}">Noticias</a>
+            <a th:href="@{/fca/admin/eventos}">Eventos</a>
+            <a th:href="@{/fca/admin/ofertas}">Bolsa laboral</a>
+        </div>
+    </aside>
