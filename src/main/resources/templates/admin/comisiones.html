@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -20,141 +18,138 @@
 
 <body>
 
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-<span th:replace="~{includes/sidebar :: .sidebar}"></span>
+    <span th:replace="~{includes/sidebar :: .sidebar}"></span>
 
-<main class="main">
-    <span th:replace="~{includes/topbar :: topbar('Comisiones')}"></span>
+    <main class="main">
+        <span th:replace="~{includes/topbar :: topbar('Comisiones')}"></span>
 
-    <section class="content">
-        <div class="hero-card">
-            <span>Gestión institucional</span>
-            <h1>Comisiones FCA</h1>
-            <p>
-                Administra las comisiones institucionales de la Facultad de Ciencias Agrarias
-                y asigna una autoridad responsable como jefe de cada comisión.
-            </p>
-        </div>
-
-        <div class="stats-grid comisiones-stats">
-            <div class="stat-card">
-                <h4>Total de comisiones</h4>
-                <strong id="totalComisiones">0</strong>
+        <section class="content">
+            <div class="hero-card">
+                <span>Gestión institucional</span>
+                <h1>Comisiones FCA</h1>
+                <p>
+                    Administra las comisiones institucionales de la Facultad de Ciencias Agrarias
+                    y asigna una autoridad responsable como jefe de cada comisión.
+                </p>
             </div>
 
-            <div class="stat-card">
-                <h4>Con jefe asignado</h4>
-                <strong id="totalConJefe">0</strong>
+            <div class="stats-grid comisiones-stats">
+                <div class="stat-card">
+                    <h4>Total de comisiones</h4>
+                    <strong id="totalComisiones">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Con jefe asignado</h4>
+                    <strong id="totalConJefe">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Autoridades disponibles</h4>
+                    <strong id="totalAutoridades">0</strong>
+                </div>
             </div>
 
-            <div class="stat-card">
-                <h4>Autoridades disponibles</h4>
-                <strong id="totalAutoridades">0</strong>
-            </div>
-        </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Listado de comisiones</h3>
+                        <p>Registra, edita o elimina comisiones institucionales.</p>
+                    </div>
 
-        <div class="panel">
-            <div class="panel-header">
+                    <button class="btn-primary" onclick="abrirModalNuevaComision()">
+                        + Nueva comisión
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <input type="text" class="search-input" id="buscarComision"
+                        placeholder="Buscar por comisión, descripción o jefe...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre de comisión</th>
+                                <th>Descripción</th>
+                                <th>Jefe de comisión</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaComisiones">
+                            <tr>
+                                <td colspan="4" class="empty-row">Cargando comisiones...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-admin" id="modalComision">
+        <div class="modal-card">
+            <div class="modal-header">
                 <div>
-                    <h3>Listado de comisiones</h3>
-                    <p>Registra, edita o elimina comisiones institucionales.</p>
+                    <h3 id="modalTituloComision">Nueva comisión</h3>
+                    <p id="modalSubtituloComision">Completa la información de la comisión.</p>
                 </div>
 
-                <button class="btn-primary" onclick="abrirModalNuevaComision()">
-                    + Nueva comisión
-                </button>
+                <button type="button" class="modal-close" onclick="cerrarModalComision()">×</button>
             </div>
 
-            <div class="toolbar">
-                <input type="text"
-                       class="search-input"
-                       id="buscarComision"
-                       placeholder="Buscar por comisión, descripción o jefe...">
-            </div>
+            <form id="formComision">
+                <input type="hidden" id="idcomision">
 
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Nombre de comisión</th>
-                        <th>Descripción</th>
-                        <th>Jefe de comisión</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="nombrecomision">Nombre de la comisión</label>
+                        <input type="text" id="nombrecomision" maxlength="150"
+                            placeholder="Ej. Comisión de Grados y Títulos">
+                    </div>
 
-                    <tbody id="tablaComisiones">
-                    <tr>
-                        <td colspan="4" class="empty-row">Cargando comisiones...</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <div class="form-group full">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" class="textarea-large" maxlength="1000"
+                            placeholder="Describe las funciones o responsabilidades de la comisión..."></textarea>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="idautoridad">Jefe de comisión</label>
+                        <select id="idautoridad">
+                            <option value="">Cargando autoridades...</option>
+                        </select>
+                        <small>
+                            Selecciona la autoridad responsable de esta comisión.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="cerrarModalComision()">
+                        Cancelar
+                    </button>
+
+                    <button type="submit" class="btn-save" id="btnGuardarComision">
+                        Guardar comisión
+                    </button>
+                </div>
+            </form>
         </div>
-    </section>
-</main>
-
-<div class="modal-admin" id="modalComision">
-    <div class="modal-card">
-        <div class="modal-header">
-            <div>
-                <h3 id="modalTituloComision">Nueva comisión</h3>
-                <p id="modalSubtituloComision">Completa la información de la comisión.</p>
-            </div>
-
-            <button type="button" class="modal-close" onclick="cerrarModalComision()">×</button>
-        </div>
-
-        <form id="formComision">
-            <input type="hidden" id="idcomision">
-
-            <div class="form-grid">
-                <div class="form-group full">
-                    <label for="nombrecomision">Nombre de la comisión</label>
-                    <input type="text"
-                           id="nombrecomision"
-                           maxlength="150"
-                           placeholder="Ej. Comisión de Grados y Títulos">
-                </div>
-
-                <div class="form-group full">
-                    <label for="descripcion">Descripción</label>
-                    <textarea id="descripcion"
-                              class="textarea-large"
-                              maxlength="1000"
-                              placeholder="Describe las funciones o responsabilidades de la comisión..."></textarea>
-                </div>
-
-                <div class="form-group full">
-                    <label for="idautoridad">Jefe de comisión</label>
-                    <select id="idautoridad">
-                        <option value="">Cargando autoridades...</option>
-                    </select>
-                    <small>
-                        Selecciona la autoridad responsable de esta comisión.
-                    </small>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="btn-cancel" onclick="cerrarModalComision()">
-                    Cancelar
-                </button>
-
-                <button type="submit" class="btn-save" id="btnGuardarComision">
-                    Guardar comisión
-                </button>
-            </div>
-        </form>
     </div>
-</div>
 
-<span th:replace="~{includes/modalperfil :: profileModal}"></span>
-<span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
 
-<script th:src="@{/js/adminperfil.js}"></script>
-<script th:src="@{/js/comisiones.js}"></script>
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/comisiones.js}"></script>
+    <script th:src="@{/js/close.js}"></script>
+
 
 </body>
+
 </html>

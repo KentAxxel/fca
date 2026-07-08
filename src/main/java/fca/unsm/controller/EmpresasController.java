@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,9 @@ public class EmpresasController {
         return ResponseEntity.ok(serviEmpresas.guardar(empresa));
     }
 
+    @Value("${app.upload-dir:uploads}")
+    private String uploadDir;
+
     @PostMapping("/empresas/subir-logo")
     public ResponseEntity<?> subirLogo(@RequestParam("logo") MultipartFile logo) {
 
@@ -86,7 +90,7 @@ public class EmpresasController {
 
             String nombreArchivo = UUID.randomUUID().toString() + extension;
 
-            Path carpeta = Paths.get("uploads/empresas");
+            Path carpeta = Paths.get(uploadDir,"empresas");
 
             if (!Files.exists(carpeta)) {
                 Files.createDirectories(carpeta);

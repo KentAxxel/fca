@@ -23,29 +23,60 @@ document.addEventListener("DOMContentLoaded", async () => {
     cargarOfertas()
   ]);
 });
+
 function configurarMenuMovil() {
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
+    const overlay = document.getElementById("mobileMenuOverlay");
 
-    if (!menuBtn || !navLinks) {
+    if (!menuBtn || !navLinks || !overlay) {
         return;
     }
 
+    function abrirMenu() {
+        navLinks.classList.add("active");
+        overlay.classList.add("active");
+        menuBtn.classList.add("active");
+        document.body.classList.add("mobile-menu-open");
+
+        const icon = menuBtn.querySelector("i");
+        if (icon) {
+            icon.className = "fa-solid fa-xmark";
+        }
+    }
+
+    function cerrarMenu() {
+        navLinks.classList.remove("active");
+        overlay.classList.remove("active");
+        menuBtn.classList.remove("active");
+        document.body.classList.remove("mobile-menu-open");
+
+        const icon = menuBtn.querySelector("i");
+        if (icon) {
+            icon.className = "fa-solid fa-bars";
+        }
+    }
+
     menuBtn.addEventListener("click", () => {
-        navLinks.classList.toggle("active");
-        menuBtn.classList.toggle("active");
+        if (navLinks.classList.contains("active")) {
+            cerrarMenu();
+        } else {
+            abrirMenu();
+        }
     });
 
-    const links = navLinks.querySelectorAll("a");
+    overlay.addEventListener("click", cerrarMenu);
 
-    links.forEach(link => {
-        link.addEventListener("click", () => {
-            navLinks.classList.remove("active");
-            menuBtn.classList.remove("active");
-        });
+    navLinks.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", cerrarMenu);
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+            cerrarMenu();
+        }
     });
 }
-
 async function obtenerDatos(url) {
   const response = await fetch(url);
 
@@ -127,6 +158,7 @@ async function cargarNoticias() {
     container.innerHTML = mensajeError("No se pudieron cargar las noticias.");
   }
 }
+
 
 function abrirModalNoticia(idnoticia) {
   const noticia = noticiasData.find(n => Number(n.idnoticia) === Number(idnoticia));
@@ -791,4 +823,22 @@ function abrirModalAutoridad(idautoridad) {
             </div>
         </div>
     `);
+}
+
+function obtenerImagen(valor, fallback) {
+    if (!valor || String(valor).trim() === "") {
+        return fallback;
+    }
+
+    const ruta = String(valor).trim();
+
+    if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
+        return ruta;
+    }
+
+    if (ruta.startsWith("/")) {
+        return ruta;
+    }
+
+    return "/" + ruta;
 }

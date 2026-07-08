@@ -471,3 +471,40 @@ body {
         height: 320px;
     }
 }
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal,
+.modal-overlay {
+    overscroll-behavior: contain;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content,
+.profile-modal,
+.messages-modal,
+.public-modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.modal-content::-webkit-scrollbar,
+.profile-modal::-webkit-scrollbar,
+.messages-modal::-webkit-scrollbar,
+.public-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb,
+.profile-modal::-webkit-scrollbar-thumb,
+.messages-modal::-webkit-scrollbar-thumb,
+.public-modal-content::-webkit-scrollbar-thumb {
+    background: #cfd8d3;
+    border-radius: 999px;
+}

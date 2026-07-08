@@ -88,6 +88,8 @@ public class SecurityConfig {
                                                                 "/api/ofertas",
                                                                 "/api/empresas")
                                                 .permitAll()
+                                                
+                                                .requestMatchers("/api/session/close-tab").authenticated()
 
                                                 .requestMatchers(
                                                                 "/fca/admin/usuarios",

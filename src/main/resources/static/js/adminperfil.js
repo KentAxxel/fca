@@ -18,12 +18,12 @@ function toggleSubmenu() {
         submenu.classList.toggle("open");
     }
 }
-
 function openProfileModal() {
     const modal = document.getElementById("profileModal");
 
     if (modal) {
-        modal.classList.add("show");
+        modal.classList.add("active");
+        document.body.classList.add("modal-open");
     }
 }
 
@@ -31,7 +31,8 @@ function closeProfileModal() {
     const modal = document.getElementById("profileModal");
 
     if (modal) {
-        modal.classList.remove("show");
+        modal.classList.remove("active");
+        document.body.classList.remove("modal-open");
     }
 }
 
@@ -39,7 +40,8 @@ function openMessagesModal() {
     const modal = document.getElementById("messagesModal");
 
     if (modal) {
-        modal.classList.add("show");
+        modal.classList.add("active");
+        document.body.classList.add("modal-open");
     }
 }
 
@@ -47,7 +49,8 @@ function closeMessagesModal() {
     const modal = document.getElementById("messagesModal");
 
     if (modal) {
-        modal.classList.remove("show");
+        modal.classList.remove("active");
+        document.body.classList.remove("modal-open");
     }
 }
 

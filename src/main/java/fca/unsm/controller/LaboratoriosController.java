@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api")
 
@@ -42,7 +42,7 @@ public class LaboratoriosController {
     @PostMapping("/laboratorios")
     public ResponseEntity<?> guardar(@RequestBody LaboratoriosDTO dto) {
 
-        Laboratorios lab  = new Laboratorios();
+        Laboratorios lab = new Laboratorios();
         lab.setNombrelaboratorio(dto.getNombrelaboratorio());
         lab.setDescripcion(dto.getDescripcion());
         lab.setUbicacion(dto.getUbicacion());
@@ -50,6 +50,9 @@ public class LaboratoriosController {
 
         return ResponseEntity.ok(serviLaboratorios.guardar(lab));
     }
+
+    @Value("${app.upload-dir:uploads}")
+    private String uploadDir;
 
     @PostMapping("/laboratorios/subir-imagen")
     public ResponseEntity<?> subirImagen(@RequestParam("imagen") MultipartFile imagen) {
@@ -83,7 +86,7 @@ public class LaboratoriosController {
 
             String nombreArchivo = UUID.randomUUID().toString() + extension;
 
-            Path carpeta = Paths.get("uploads/laboratorios");
+            Path carpeta = Paths.get(uploadDir,"laboratorios");
 
             if (!Files.exists(carpeta)) {
                 Files.createDirectories(carpeta);
@@ -104,7 +107,7 @@ public class LaboratoriosController {
 
     @PutMapping("/laboratorios")
     public ResponseEntity<?> modificar(@RequestBody LaboratoriosDTO dto) {
-        
+
         if (dto.getIdlaboratorio() == null) {
             return ResponseEntity.badRequest().body("ID no existe");
         }
@@ -115,7 +118,7 @@ public class LaboratoriosController {
         lab.setDescripcion(dto.getDescripcion());
         lab.setUbicacion(dto.getUbicacion());
         lab.setImagen(dto.getImagen());
-        
+
         return ResponseEntity.ok(serviLaboratorios.modificar(lab));
     }
 
@@ -125,7 +128,7 @@ public class LaboratoriosController {
     }
 
     @DeleteMapping("/laboratorios/{id}")
-    public String eliminar(@PathVariable Integer id){
+    public String eliminar(@PathVariable Integer id) {
         serviLaboratorios.eliminar(id);
         return "Registro eliminado correctamente";
     }

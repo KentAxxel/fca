@@ -174,3 +174,21 @@ function escapeHtml(texto) {
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
 }
+
+function obtenerImagen(valor, fallback) {
+    if (!valor || String(valor).trim() === "") {
+        return fallback;
+    }
+
+    const ruta = String(valor).trim();
+
+    if (ruta.startsWith("http://") || ruta.startsWith("https://")) {
+        return ruta;
+    }
+
+    if (ruta.startsWith("/")) {
+        return ruta;
+    }
+
+    return "/" + ruta;
+}
