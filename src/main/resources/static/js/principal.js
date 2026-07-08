@@ -33,13 +33,21 @@ function configurarMenuMovil() {
         return;
     }
 
+    let scrollGuardado = 0;
+
     function abrirMenu() {
+        scrollGuardado = window.scrollY || document.documentElement.scrollTop;
+
         navLinks.classList.add("active");
         overlay.classList.add("active");
         menuBtn.classList.add("active");
+
         document.body.classList.add("mobile-menu-open");
-        menuBtn.setAttribute("aria-label", "Cerrar menú");
-        menuBtn.setAttribute("aria-expanded", "true");
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${scrollGuardado}px`;
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.width = "100%";
 
         const icon = menuBtn.querySelector("i");
         if (icon) {
@@ -51,9 +59,15 @@ function configurarMenuMovil() {
         navLinks.classList.remove("active");
         overlay.classList.remove("active");
         menuBtn.classList.remove("active");
+
         document.body.classList.remove("mobile-menu-open");
-        menuBtn.setAttribute("aria-label", "Abrir menú");
-        menuBtn.setAttribute("aria-expanded", "false");
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+
+        window.scrollTo(0, scrollGuardado);
 
         const icon = menuBtn.querySelector("i");
         if (icon) {

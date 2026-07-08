@@ -1341,20 +1341,19 @@ body.modal-open {
     background: #cfd8d3;
     border-radius: 999px;
 }
-
 /* =========================
    MENÚ MÓVIL DEFINITIVO
 ========================= */
+
 .mobile-menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(21, 21, 21, 0.45);
-    backdrop-filter: blur(4px);
+    background: rgba(21, 21, 21, 0.38);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: 0.25s ease;
-    z-index: 2998;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    z-index: 9000;
 }
 
 .mobile-menu-overlay.active {
@@ -1383,7 +1382,6 @@ body.modal-open {
 
 body.mobile-menu-open {
     overflow: hidden;
-    height: 100dvh;
 }
 
 @media (max-width: 900px) {
@@ -1396,8 +1394,7 @@ body.mobile-menu-open {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        z-index: 3001;
-        flex: 0 0 auto;
+        z-index: 9003;
     }
 
     .menu-btn.active {
@@ -1412,28 +1409,32 @@ body.mobile-menu-open {
     }
 
     .nav-links {
-        position: fixed;
-        top: 0;
-        right: -105%;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+
         width: min(330px, 86vw);
         height: 100dvh;
         background: #ffffff;
+
         padding: 96px 24px 28px;
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
-        z-index: 3000;
-        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.16);
-        transition: right 0.3s ease;
+
+        z-index: 9002;
+        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.18);
         border-radius: 28px 0 0 28px;
         overflow-y: auto;
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
+
+        transform: translateX(110%);
+        transition: transform 0.3s ease;
     }
 
     .nav-links.active {
-        right: 0;
+        transform: translateX(0);
     }
 
     .nav-links::before {
@@ -1475,12 +1476,6 @@ body.mobile-menu-open {
     }
 }
 
-@media (max-width: 480px) {
-    .navbar {
-        height: 68px;
-    }
-}
-
 @media (min-width: 901px) {
     .mobile-menu-overlay {
         display: none;
@@ -1495,5 +1490,6 @@ body.mobile-menu-open {
         box-shadow: none;
         border-radius: 0;
         overflow: visible;
+        transform: none;
     }
 }
