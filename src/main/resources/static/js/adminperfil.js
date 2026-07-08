@@ -1,13 +1,15 @@
 function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
+    const sidebar = document.getElementById("sidebar") || document.querySelector(".sidebar");
+    const overlay = document.getElementById("overlay") || document.getElementById("mobileOverlay");
 
     if (sidebar) {
         sidebar.classList.toggle("open");
+        sidebar.classList.toggle("active");
     }
 
     if (overlay) {
         overlay.classList.toggle("show");
+        overlay.classList.toggle("active");
     }
 }
 
@@ -19,6 +21,19 @@ function toggleSubmenu() {
     }
 }
 
+function hayModalActivo() {
+    return Boolean(document.querySelector(".modal-overlay.active, .modal.show"));
+}
+
+function bloquearFondo() {
+    document.body.classList.add("modal-open");
+}
+
+function desbloquearFondoSiCorresponde() {
+    if (!hayModalActivo()) {
+        document.body.classList.remove("modal-open");
+    }
+}
 
 function openProfileModal() {
     const modal = document.getElementById("profileModal");
@@ -29,7 +44,7 @@ function openProfileModal() {
     }
 
     modal.classList.add("active");
-    document.body.classList.add("modal-open");
+    bloquearFondo();
 }
 
 function closeProfileModal() {
@@ -40,7 +55,7 @@ function closeProfileModal() {
     }
 
     modal.classList.remove("active");
-    document.body.classList.remove("modal-open");
+    desbloquearFondoSiCorresponde();
 }
 
 function openMessagesModal() {
@@ -52,7 +67,7 @@ function openMessagesModal() {
     }
 
     modal.classList.add("active");
-    document.body.classList.add("modal-open");
+    bloquearFondo();
 }
 
 function closeMessagesModal() {
@@ -63,7 +78,7 @@ function closeMessagesModal() {
     }
 
     modal.classList.remove("active");
-    document.body.classList.remove("modal-open");
+    desbloquearFondoSiCorresponde();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -93,4 +108,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-

@@ -38,6 +38,8 @@ function configurarMenuMovil() {
         overlay.classList.add("active");
         menuBtn.classList.add("active");
         document.body.classList.add("mobile-menu-open");
+        menuBtn.setAttribute("aria-label", "Cerrar menú");
+        menuBtn.setAttribute("aria-expanded", "true");
 
         const icon = menuBtn.querySelector("i");
         if (icon) {
@@ -50,6 +52,8 @@ function configurarMenuMovil() {
         overlay.classList.remove("active");
         menuBtn.classList.remove("active");
         document.body.classList.remove("mobile-menu-open");
+        menuBtn.setAttribute("aria-label", "Abrir menú");
+        menuBtn.setAttribute("aria-expanded", "false");
 
         const icon = menuBtn.querySelector("i");
         if (icon) {
