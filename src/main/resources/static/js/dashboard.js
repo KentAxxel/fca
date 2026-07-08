@@ -1,58 +1,176 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    await cargarDashboard();
+});
 
-function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("mobileOverlay").classList.toggle("show");
+async function cargarDashboard() {
+    const [
+        usuarios,
+        autoridades,
+        laboratorios,
+        noticias,
+        eventos,
+        ofertas,
+        empresas,
+        comisiones
+    ] = await Promise.all([
+        obtenerDatosSeguro("/api/usuarios"),
+        obtenerDatosSeguro("/api/autoridades"),
+        obtenerDatosSeguro("/api/laboratorios"),
+        obtenerDatosSeguro("/api/noticias"),
+        obtenerDatosSeguro("/api/eventos"),
+        obtenerDatosSeguro("/api/ofertas"),
+        obtenerDatosSeguro("/api/empresas"),
+        obtenerDatosSeguro("/api/comisiones")
+    ]);
+
+    const totalPublicaciones = noticias.length + eventos.length + ofertas.length;
+
+    setText("totalUsuarios", usuarios.length);
+    setText("totalAutoridades", autoridades.length);
+    setText("totalLaboratorios", laboratorios.length);
+    setText("totalPublicaciones", totalPublicaciones);
+
+    setText("totalNoticias", noticias.length);
+    setText("totalEventos", eventos.length);
+    setText("totalBolsa", ofertas.length);
+
+    actualizarActividadReciente({
+        usuarios,
+        autoridades,
+        laboratorios,
+        noticias,
+        eventos,
+        ofertas,
+        empresas,
+        comisiones
+    });
 }
 
-function toggleSubmenu() {
-    document.getElementById("submenuPublicaciones").classList.toggle("open");
-}
-
-function openProfileModal() {
-    document.getElementById("profileModal").classList.add("show");
-}
-
-function closeProfileModal() {
-    document.getElementById("profileModal").classList.remove("show");
-}
-
-function openMessagesModal() {
-    document.getElementById("messagesModal").classList.add("show");
-}
-
-function closeMessagesModal() {
-    document.getElementById("messagesModal").classList.remove("show");
-}
-
-async function cargarResumenUsuarios() {
+async function obtenerDatosSeguro(url) {
     try {
-        const response = await fetch("/api/usuarios");
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        });
 
         if (!response.ok) {
-            return;
+            console.warn(`No se pudo cargar ${url}. Estado: ${response.status}`);
+            return [];
         }
 
-        const usuarios = await response.json();
+        const data = await response.json();
 
-        document.getElementById("totalUsuarios").textContent = usuarios.length;
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data;
 
     } catch (error) {
-        console.log("No se pudo cargar el resumen de usuarios.");
+        console.error(`Error cargando ${url}:`, error);
+        return [];
     }
 }
 
-function cargarResumenDemoPublicaciones() {
-    const noticias = 6;
-    const eventos = 4;
-    const bolsa = 3;
+function actualizarActividadReciente(data) {
+    const contenedor = document.getElementById("actividadReciente");
 
-    document.getElementById("totalNoticias").textContent = noticias;
-    document.getElementById("totalEventos").textContent = eventos;
-    document.getElementById("totalBolsa").textContent = bolsa;
-    document.getElementById("totalPublicaciones").textContent = noticias + eventos + bolsa;
+    if (!contenedor) {
+        return;
+    }
+
+    const ofertasActivas = data.ofertas.filter(oferta =>
+        String(oferta.estado ?? "").toUpperCase() === "ACTIVO"
+    ).length;
+
+    const noticiasRecientes = data.noticias
+        .filter(noticia => noticia.fecha)
+        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+    const eventosProximos = data.eventos
+        .filter(evento => evento.fecha)
+        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+    const ultimaNoticia = noticiasRecientes[0];
+    const proximoEvento = eventosProximos[0];
+
+    contenedor.innerHTML = `
+        <div class="activity-item">
+            <div class="activity-icon">✅</div>
+            <div>
+                <strong>Dashboard actualizado</strong>
+                <p>Los indicadores se cargaron desde las APIs reales del sistema FCA.</p>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <div class="activity-icon">📰</div>
+            <div>
+                <strong>Última noticia</strong>
+                <p>
+                    ${ultimaNoticia
+                        ? escapeHtml(ultimaNoticia.titulo ?? "Noticia registrada")
+                        : "Aún no hay noticias registradas."}
+                </p>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <div class="activity-icon">📅</div>
+            <div>
+                <strong>Próximo evento</strong>
+                <p>
+                    ${proximoEvento
+                        ? `${escapeHtml(proximoEvento.titulo ?? "Evento registrado")} - ${formatearFecha(proximoEvento.fecha)}`
+                        : "Aún no hay eventos registrados."}
+                </p>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <div class="activity-icon">💼</div>
+            <div>
+                <strong>Ofertas activas</strong>
+                <p>${ofertasActivas} oferta(s) laborales activas actualmente.</p>
+            </div>
+        </div>
+
+        <div class="activity-item">
+            <div class="activity-icon">🏢</div>
+            <div>
+                <strong>Empresas y comisiones</strong>
+                <p>
+                    ${data.empresas.length} empresa(s) vinculada(s) y
+                    ${data.comisiones.length} comisión(es) registrada(s).
+                </p>
+            </div>
+        </div>
+    `;
 }
 
-cargarResumenUsuarios();
-cargarResumenDemoPublicaciones();
+function setText(id, valor) {
+    const elemento = document.getElementById(id);
 
+    if (elemento) {
+        elemento.textContent = valor;
+    }
+}
 
+function formatearFecha(fecha) {
+    if (!fecha) {
+        return "";
+    }
+
+    return String(fecha).substring(0, 10);
+}
+
+function escapeHtml(texto) {
+    return String(texto)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}

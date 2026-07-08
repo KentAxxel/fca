@@ -64,14 +64,14 @@
                 <div class="stat-card">
                     <div class="stat-icon">🏛️</div>
                     <h4>Autoridades</h4>
-                    <strong id="totalAutoridades">2</strong>
+                    <strong id="totalAutoridades">0</strong>
                     <p>Autoridades visibles</p>
                 </div>
 
                 <div class="stat-card">
                     <div class="stat-icon">🧪</div>
                     <h4>Laboratorios</h4>
-                    <strong id="totalLaboratorios">12</strong>
+                    <strong id="totalLaboratorios">0</strong>
                     <p>Espacios académicos</p>
                 </div>
             </div>
@@ -122,6 +122,17 @@
                                 <strong>Bolsa laboral</strong>
                                 <small>Publica oportunidades laborales.</small>
                             </a>
+                            <a th:href="@{/fca/admin/empresas}" class="quick-card">
+                                <span>🏢</span>
+                                <strong>Empresas</strong>
+                                <small>Administra empresas vinculadas.</small>
+                            </a>
+
+                            <a th:href="@{/fca/admin/comisiones}" class="quick-card">
+                                <span>🤝</span>
+                                <strong>Comisiones</strong>
+                                <small>Gestiona comisiones institucionales.</small>
+                            </a>
                         </div>
                     </div>
 
@@ -133,7 +144,7 @@
                             </div>
                         </div>
 
-                        <div class="activity-list">
+                        <div class="activity-list" id="actividadReciente">
                             <div class="activity-item">
                                 <div class="activity-icon">✅</div>
                                 <div>
@@ -334,4 +345,4 @@
     <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
 </body>
 
-</html>
+</html>     

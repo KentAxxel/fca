@@ -934,13 +934,13 @@ textarea {
     border-radius: 26px;
     overflow: hidden;
     border: 1px solid #e8e8e8;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
     transition: 0.25s;
 }
 
 .public-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 24px 55px rgba(0,0,0,0.10);
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.10);
 }
 
 .public-card img {
@@ -1019,7 +1019,7 @@ textarea {
     border-radius: 24px;
     padding: 24px;
     border: 1px solid #e8e8e8;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -1061,7 +1061,7 @@ textarea {
     color: #0b7a36;
 }
 
-.job-card > strong {
+.job-card>strong {
     color: #095f2b;
     white-space: nowrap;
 }
@@ -1302,5 +1302,32 @@ body.modal-open {
     .modal-public-profile h2,
     .modal-public-article h2 {
         font-size: 24px;
+    }
+}
+
+.access-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #0b7a36;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 14px;
+    transition: 0.25s;
+    white-space: nowrap;
+}
+
+.access-btn:hover {
+    background: #095f2b;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .access-btn {
+        padding: 10px 15px;
+        font-size: 13px;
     }
 }
