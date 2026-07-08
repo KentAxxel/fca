@@ -33,6 +33,15 @@ function configurarMenuMovil() {
         return;
     }
 
+    // Sacamos el menú y el overlay del header para evitar problemas de z-index
+    if (navLinks.parentElement !== document.body) {
+        document.body.appendChild(navLinks);
+    }
+
+    if (overlay.parentElement !== document.body) {
+        document.body.appendChild(overlay);
+    }
+
     let scrollGuardado = 0;
 
     function abrirMenu() {

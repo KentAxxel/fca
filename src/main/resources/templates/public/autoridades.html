@@ -6,51 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autoridades | FCA UNSM</title>
 
-    <link rel="stylesheet" href="/css/public.css">
+    <link rel="stylesheet" href="/css/public.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body data-module="autoridades">
 
-    <header class="public-header">
-        <nav class="public-nav">
-            <a href="/fca/inicio" class="public-logo">
-                <div class="logo-icon"><i class="fa-solid fa-seedling"></i></div>
-                <div>
-                    <h1>FCA</h1><span>UNSM</span>
-                </div>
-            </a>
+<header class="public-header">
+    <nav class="public-nav">
+        <a href="/fca/inicio" class="public-logo">
+            <div class="logo-icon">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
 
-            <a href="/fca/inicio" class="back-link">Volver al inicio</a>
-        </nav>
-    </header>
+            <div>
+                <h1>FCA</h1>
+                <span>UNSM</span>
+            </div>
+        </a>
 
-    <section class="public-hero">
-        <span id="publicLabel">Gestión institucional</span>
-        <h2 id="publicTitle">Autoridades</h2>
-        <p id="publicDescription">Conoce a las autoridades de la Facultad de Ciencias Agrarias.</p>
-    </section>
+        <a href="/fca/inicio" class="back-link">Volver al inicio</a>
+    </nav>
+</header>
 
-    <main class="public-content">
-        <div class="public-toolbar">
-            <input type="text" class="public-search" id="publicSearch" placeholder="Buscar...">
-            <span class="counter-badge" id="publicCounter">0 registro(s)</span>
-        </div>
+<section class="public-hero">
+    <span id="publicLabel">Gestión institucional</span>
+    <h2 id="publicTitle">Autoridades</h2>
+    <p id="publicDescription">
+        Conoce a las autoridades de la Facultad de Ciencias Agrarias.
+    </p>
+</section>
 
-        <div class="public-grid four" id="publicListContainer"></div>
-    </main>
+<main class="public-content">
+    <div class="public-toolbar">
+        <input type="text"
+               class="public-search"
+               id="publicSearch"
+               placeholder="Buscar autoridad...">
 
-    <div class="modal" id="publicModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="modalBody"></div>
-        </div>
+        <span class="counter-badge" id="publicCounter">
+            0 registro(s)
+        </span>
     </div>
 
-    <script th:src="@{/js/autoridades.js}"></script>
+    <div class="public-grid four" id="publicListContainer"></div>
+</main>
+
+<div class="modal" id="publicModal">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose" type="button">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script src="/js/public-list.js?v=3"></script>
 
 </body>
-
 </html>

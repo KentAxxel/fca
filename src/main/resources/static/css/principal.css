@@ -46,7 +46,7 @@ textarea {
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .navbar {
@@ -814,6 +814,7 @@ textarea {
 
 
 @media (max-width: 760px) {
+
     .quick-section,
     .cards-grid,
     .mission-grid {
@@ -1341,19 +1342,20 @@ body.modal-open {
     background: #cfd8d3;
     border-radius: 999px;
 }
+
 /* =========================
-   MENÚ MÓVIL DEFINITIVO
+   MENÚ MÓVIL CORREGIDO
 ========================= */
 
 .mobile-menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(21, 21, 21, 0.38);
+    background: rgba(21, 21, 21, 0.42);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.25s ease, visibility 0.25s ease;
-    z-index: 9000;
+    z-index: 8000;
 }
 
 .mobile-menu-overlay.active {
@@ -1385,16 +1387,16 @@ body.mobile-menu-open {
 }
 
 @media (max-width: 900px) {
-    .navbar {
-        height: 76px;
-        position: relative;
+    .header {
+        z-index: 7000;
     }
 
     .menu-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        z-index: 9003;
+        position: relative;
+        z-index: 10002;
     }
 
     .menu-btn.active {
@@ -1424,8 +1426,8 @@ body.mobile-menu-open {
         align-items: stretch;
         gap: 12px;
 
-        z-index: 9002;
-        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.18);
+        z-index: 10001;
+        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.20);
         border-radius: 28px 0 0 28px;
         overflow-y: auto;
 
@@ -1482,7 +1484,7 @@ body.mobile-menu-open {
     }
 
     .nav-links {
-        position: static;
+        position: static !important;
         width: auto;
         height: auto;
         padding: 0;
