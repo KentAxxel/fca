@@ -3,12 +3,10 @@
         <div class="modal-header">
             <div>
                 <h3>Perfil de usuario</h3>
-                <p style="color:#666; margin-top:6px;">
-                    Información de la sesión actual.
-                </p>
+                <p>Información de la sesión actual.</p>
             </div>
 
-            <button class="close-btn" onclick="closeProfileModal()">×</button>
+            <button type="button" class="close-btn" onclick="closeProfileModal()">×</button>
         </div>
 
         <div class="profile-box">
@@ -29,15 +27,13 @@
             </div>
 
             <div>
-                <span>Contraseña</span>
-                <button type="button" class="btn-change-password" onclick="solicitarCambioContrasena()">
-                    Cambiar contraseña
-                </button>
+                <span>Estado</span>
+                <strong>Sesión activa</strong>
             </div>
         </div>
 
         <div class="modal-actions">
-            <button class="btn-green" onclick="closeProfileModal()">
+            <button type="button" class="btn-green" onclick="closeProfileModal()">
                 Continuar
             </button>
 

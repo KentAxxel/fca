@@ -18,108 +18,101 @@ function toggleSubmenu() {
         submenu.classList.toggle("open");
     }
 }
+
+
 function openProfileModal() {
     const modal = document.getElementById("profileModal");
 
-    if (modal) {
-        modal.classList.add("active");
-        document.body.classList.add("modal-open");
+    if (!modal) {
+        console.error("No se encontró el modal con id profileModal");
+        return;
     }
+
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
 }
 
 function closeProfileModal() {
     const modal = document.getElementById("profileModal");
 
-    if (modal) {
-        modal.classList.remove("active");
-        document.body.classList.remove("modal-open");
+    if (!modal) {
+        return;
     }
+
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
 }
 
 function openMessagesModal() {
     const modal = document.getElementById("messagesModal");
 
-    if (modal) {
-        modal.classList.add("active");
-        document.body.classList.add("modal-open");
+    if (!modal) {
+        console.error("No se encontró el modal con id messagesModal");
+        return;
     }
+
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
 }
 
 function closeMessagesModal() {
     const modal = document.getElementById("messagesModal");
 
-    if (modal) {
-        modal.classList.remove("active");
-        document.body.classList.remove("modal-open");
+    if (!modal) {
+        return;
     }
+
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
 }
 
-async function solicitarCambioContrasena() {
-    const csrfTokenElement = document.querySelector('meta[name="_csrf"]');
-    const csrfHeaderElement = document.querySelector('meta[name="_csrf_header"]');
+document.addEventListener("DOMContentLoaded", () => {
+    const profileModal = document.getElementById("profileModal");
+    const messagesModal = document.getElementById("messagesModal");
 
-    if (!csrfTokenElement || !csrfHeaderElement) {
-        Swal.fire({
-            icon: "error",
-            title: "Error de seguridad",
-            text: "No se encontró el token CSRF.",
-            confirmButtonColor: "#0b7a36"
-        });
-        return;
-    }
-
-    const csrfToken = csrfTokenElement.getAttribute("content");
-    const csrfHeader = csrfHeaderElement.getAttribute("content");
-
-    const confirmar = await Swal.fire({
-        icon: "question",
-        title: "¿Cambiar contraseña?",
-        text: "Te enviaremos un enlace a tu correo para cambiar tu contraseña.",
-        showCancelButton: true,
-        confirmButtonColor: "#0b7a36",
-        cancelButtonColor: "#151515",
-        confirmButtonText: "Sí, enviar correo",
-        cancelButtonText: "Cancelar"
-    });
-
-    if (!confirmar.isConfirmed) {
-        return;
-    }
-
-    try {
-        const response = await fetch("/api/perfil/solicitar-cambio-contrasena", {
-            method: "POST",
-            headers: {
-                [csrfHeader]: csrfToken
+    if (profileModal) {
+        profileModal.addEventListener("click", (e) => {
+            if (e.target === profileModal) {
+                closeProfileModal();
             }
         });
+    }
 
-        if (!response.ok) {
-            const mensaje = await response.text();
-
-            Swal.fire({
-                icon: "error",
-                title: "No se pudo enviar",
-                text: mensaje || "Ocurrió un error al solicitar el cambio de contraseña.",
-                confirmButtonColor: "#0b7a36"
-            });
-
-            return;
-        }
-
-        Swal.fire({
-            icon: "success",
-            title: "Correo enviado",
-            text: "Revisa tu correo para continuar con el cambio de contraseña.",
-            confirmButtonColor: "#0b7a36"
-        });
-
-    } catch (error) {
-        Swal.fire({
-            icon: "error",
-            title: "Error de conexión",
-            text: "No se pudo conectar con el servidor.",
-            confirmButtonColor: "#0b7a36"
+    if (messagesModal) {
+        messagesModal.addEventListener("click", (e) => {
+            if (e.target === messagesModal) {
+                closeMessagesModal();
+            }
         });
     }
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeProfileModal();
+            closeMessagesModal();
+        }
+    });
+});
+
+.messages-modal {
+    width: min(620px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+
+    animation: modalIn 0.25s ease;
+}
+
+.messages-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-modal::-webkit-scrollbar-thumb {
+    background: #cfd8d3;
+    border-radius: 999px;
 }

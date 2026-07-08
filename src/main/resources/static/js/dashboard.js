@@ -192,3 +192,29 @@ function obtenerImagen(valor, fallback) {
 
     return "/" + ruta;
 }
+
+function abrirModalPublico(html) {
+    const modal = document.getElementById("publicModal");
+    const modalBody = document.getElementById("modalBody");
+
+    if (!modal || !modalBody) {
+        return;
+    }
+
+    modalBody.innerHTML = html;
+    modal.classList.add("show");
+    document.body.classList.add("modal-open");
+}
+
+function cerrarModalPublico() {
+    const modal = document.getElementById("publicModal");
+    const modalBody = document.getElementById("modalBody");
+
+    if (!modal || !modalBody) {
+        return;
+    }
+
+    modal.classList.remove("show");
+    modalBody.innerHTML = "";
+    document.body.classList.remove("modal-open");
+}

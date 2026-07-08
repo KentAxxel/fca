@@ -172,12 +172,12 @@
         </div>
     </div>
 
+    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
+    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
+
     <<script th:src="@{/js/adminperfil.js}"></script>
     <script th:src="@{/js/close.js}"></script>
     <script th:src="@{/js/usuarios.js}"></script>
-
-    <span th:replace="~{includes/modalperfil :: profileModal}"></span>
-    <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
 </body>
 
 </html>

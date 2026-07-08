@@ -250,100 +250,11 @@
         </section>
     </main>
 
-    <div class="modal-overlay" id="profileModal">
-        <div class="profile-modal">
-            <div class="modal-header">
-                <div>
-                    <h3>Perfil de usuario</h3>
-                    <p style="color:#666; margin-top:6px;">Información de la sesión actual.</p>
-                </div>
-
-                <button class="close-btn" onclick="closeProfileModal()">×</button>
-            </div>
-
-            <div class="profile-box">
-                <div class="profile-avatar">👤</div>
-                <h4 th:text="${username}">adminfca</h4>
-                <p th:text="${rol}">ADMIN</p>
-            </div>
-
-            <div class="profile-info">
-                <div>
-                    <span>Usuario</span>
-                    <strong th:text="${username}">adminfca</strong>
-                </div>
-
-                <div>
-                    <span>Rol</span>
-                    <strong th:text="${rol}">ADMIN</strong>
-                </div>
-
-                <div>
-                    <span>Estado</span>
-                    <strong>Sesión activa</strong>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button class="btn-green" onclick="closeProfileModal()">Continuar</button>
-                <form th:action="@{/logout}" method="post" class="logout-form">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-                    <button type="submit" class="btn-dark">
-                        Cerrar sesión
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="messagesModal">
-        <div class="messages-modal">
-            <div class="modal-header">
-                <div>
-                    <h3>Mensajes</h3>
-                    <p style="color:#666; margin-top:6px;">Centro de notificaciones del panel.</p>
-                </div>
-
-                <button class="close-btn" onclick="closeMessagesModal()">×</button>
-            </div>
-
-            <div class="message-list">
-                <div class="message-item">
-                    <strong>
-                        Bienvenido al panel
-                        <span>Nuevo</span>
-                    </strong>
-                    <p>Tu sesión se inició correctamente. Puedes gestionar los módulos disponibles desde el menú
-                        lateral.</p>
-                </div>
-
-                <div class="message-item">
-                    <strong>
-                        Usuarios invitados
-                        <span>Importante</span>
-                    </strong>
-                    <p>Los nuevos registros se crean automáticamente con rol INVITADO. Revisa sus permisos cuando sea
-                        necesario.</p>
-                </div>
-
-                <div class="message-item">
-                    <strong>
-                        Seguridad de cuenta
-                        <span>Activo</span>
-                    </strong>
-                    <p>El sistema bloquea nuevas sesiones cuando la cuenta ya se encuentra activa.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script th:src="@{/js/adminperfil.js}"></script>
-    <script th:src="@{/js/dashboard.js}"></script>
-
     <span th:replace="~{includes/modalperfil :: profileModal}"></span>
     <span th:replace="~{includes/modalmensajes :: messagesModal}"></span>
-    
+
+    <script th:src="@{/js/adminperfil.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>    
     <script th:src="@{/js/close.js}"></script>
 
 </body>
