@@ -26,6 +26,14 @@
             </div>
 
             <ul class="nav-links" id="navLinks">
+                <li class="mobile-menu-head">
+                    <span>Menú FCA</span>
+
+                    <button type="button" class="mobile-close-btn" id="mobileCloseBtn" aria-label="Cerrar menú">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </li>
+
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#autoridades">Autoridades</a></li>
                 <li><a href="#noticias">Noticias</a></li>
@@ -35,9 +43,16 @@
                 <li><a href="#bolsa">Bolsa Laboral</a></li>
                 <li><a href="#empresas">Empresas</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+
+                <li class="mobile-access-item">
+                    <a href="/fca/login" class="mobile-access-link">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Acceder
+                    </a>
+                </li>
             </ul>
 
-            <a href="/fca/login" class="access-btn">Acceder</a> 
+            <a href="/fca/login" class="access-btn">Acceder</a>
 
             <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menú">
                 <i class="fa-solid fa-bars"></i>
@@ -46,7 +61,7 @@
     </header>
 
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
+
     <!-- HERO -->
     <section class="hero" id="inicio">
         <div class="hero-content">
@@ -85,33 +100,6 @@
                     <span>Programas</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ACCESOS RÁPIDOS -->
-    <section class="quick-section">
-        <div class="quick-card">
-            <i class="fa-solid fa-newspaper"></i>
-            <h3>Noticias</h3>
-            <p>Actualidad académica e institucional.</p>
-        </div>
-
-        <div class="quick-card">
-            <i class="fa-solid fa-calendar-days"></i>
-            <h3>Eventos</h3>
-            <p>Conferencias, charlas y actividades.</p>
-        </div>
-
-        <div class="quick-card">
-            <i class="fa-solid fa-flask"></i>
-            <h3>Laboratorios</h3>
-            <p>Espacios de investigación y práctica.</p>
-        </div>
-
-        <div class="quick-card">
-            <i class="fa-solid fa-briefcase"></i>
-            <h3>Bolsa laboral</h3>
-            <p>Ofertas y prácticas profesionales.</p>
         </div>
     </section>
 

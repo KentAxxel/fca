@@ -28,12 +28,12 @@ function configurarMenuMovil() {
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
     const overlay = document.getElementById("mobileMenuOverlay");
+    const closeBtn = document.getElementById("mobileCloseBtn");
 
     if (!menuBtn || !navLinks || !overlay) {
         return;
     }
 
-    // Sacamos el menú y el overlay del header para evitar problemas de z-index
     if (navLinks.parentElement !== document.body) {
         document.body.appendChild(navLinks);
     }
@@ -57,11 +57,6 @@ function configurarMenuMovil() {
         document.body.style.left = "0";
         document.body.style.right = "0";
         document.body.style.width = "100%";
-
-        const icon = menuBtn.querySelector("i");
-        if (icon) {
-            icon.className = "fa-solid fa-xmark";
-        }
     }
 
     function cerrarMenu() {
@@ -77,11 +72,6 @@ function configurarMenuMovil() {
         document.body.style.width = "";
 
         window.scrollTo(0, scrollGuardado);
-
-        const icon = menuBtn.querySelector("i");
-        if (icon) {
-            icon.className = "fa-solid fa-bars";
-        }
     }
 
     cerrarMenu();
@@ -93,6 +83,10 @@ function configurarMenuMovil() {
             abrirMenu();
         }
     });
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", cerrarMenu);
+    }
 
     overlay.addEventListener("click", cerrarMenu);
 
