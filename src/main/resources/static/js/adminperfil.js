@@ -94,25 +94,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-.messages-modal {
-    width: min(620px, 100%);
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-
-    background: #ffffff;
-    border-radius: 28px;
-    padding: 28px;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
-
-    animation: modalIn 0.25s ease;
-}
-
-.messages-modal::-webkit-scrollbar {
-    width: 8px;
-}
-
-.messages-modal::-webkit-scrollbar-thumb {
-    background: #cfd8d3;
-    border-radius: 999px;
-}

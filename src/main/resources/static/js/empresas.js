@@ -517,3 +517,5 @@ function obtenerImagen(valor, fallback) {
 
     return "/" + ruta;
 }
+
+const foto = obtenerImagen(empresa.foto, "/images/default-user.png");

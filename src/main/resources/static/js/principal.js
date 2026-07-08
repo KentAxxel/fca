@@ -57,6 +57,8 @@ function configurarMenuMovil() {
         }
     }
 
+    cerrarMenu();
+
     menuBtn.addEventListener("click", () => {
         if (navLinks.classList.contains("active")) {
             cerrarMenu();
@@ -77,6 +79,8 @@ function configurarMenuMovil() {
         }
     });
 }
+
+
 async function obtenerDatos(url) {
   const response = await fetch(url);
 

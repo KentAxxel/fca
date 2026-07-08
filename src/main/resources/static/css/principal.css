@@ -1421,99 +1421,6 @@ body.modal-open {
     transform: translateY(-2px);
 }
 
-@media (max-width: 900px) {
-    .menu-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1201;
-    }
-
-    .mobile-menu-overlay {
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(21, 21, 21, 0.45);
-        backdrop-filter: blur(4px);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: 0.25s;
-        z-index: 1198;
-    }
-
-    .mobile-menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -310px;
-        width: min(310px, 86vw);
-        height: 100vh;
-        background: #ffffff;
-        padding: 92px 22px 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 1199;
-        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.16);
-        transition: 0.3s ease;
-        border-radius: 28px 0 0 28px;
-    }
-
-    .nav-links.active {
-        right: 0;
-    }
-
-    .nav-links li {
-        width: 100%;
-        list-style: none;
-    }
-
-    .nav-links a {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 14px 16px;
-        border-radius: 18px;
-        color: #151515;
-        font-weight: 800;
-        text-decoration: none;
-        transition: 0.25s;
-    }
-
-    .nav-links a:hover {
-        background: #e9f7ee;
-        color: #0b7a36;
-        transform: translateX(4px);
-    }
-
-    .nav-links::before {
-        content: "Menú FCA";
-        position: absolute;
-        top: 30px;
-        left: 24px;
-        font-size: 20px;
-        font-weight: 900;
-        color: #0b7a36;
-    }
-
-    .menu-btn.active {
-        position: fixed;
-        top: 18px;
-        right: 18px;
-        background: #151515;
-    }
-
-    body.mobile-menu-open {
-        overflow: hidden;
-    }
-}
-
 body.modal-open {
     overflow: hidden;
 }
@@ -1549,4 +1456,143 @@ body.modal-open {
 .public-modal-content::-webkit-scrollbar-thumb {
     background: #cfd8d3;
     border-radius: 999px;
+}
+
+.mobile-menu-overlay {
+    display: none;
+}
+
+.menu-btn {
+    display: none;
+    border: none;
+    background: #0b7a36;
+    color: #ffffff;
+    width: 46px;
+    height: 46px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.25s;
+    box-shadow: 0 10px 25px rgba(11, 122, 54, 0.22);
+}
+
+.menu-btn:hover {
+    background: #095f2b;
+}
+
+@media (max-width: 900px) {
+    .menu-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3002;
+    }
+
+    .mobile-menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(21, 21, 21, 0.45);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: 0.25s ease;
+        z-index: 3000;
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: min(330px, 86vw);
+        height: 100vh;
+        background: #ffffff;
+        padding: 95px 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 3001;
+        box-shadow: -18px 0 45px rgba(0, 0, 0, 0.16);
+        transition: right 0.3s ease;
+        border-radius: 28px 0 0 28px;
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links::before {
+        content: "Menú FCA";
+        position: absolute;
+        top: 34px;
+        left: 24px;
+        font-size: 22px;
+        font-weight: 900;
+        color: #0b7a36;
+    }
+
+    .nav-links li {
+        width: 100%;
+        list-style: none;
+    }
+
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 18px;
+        color: #151515;
+        font-weight: 800;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:active {
+        background: #e9f7ee;
+        color: #0b7a36;
+        transform: translateX(4px);
+    }
+
+    .menu-btn.active {
+        position: fixed;
+        top: 18px;
+        right: 18px;
+        background: #151515;
+    }
+
+    body.mobile-menu-open {
+        overflow: hidden;
+    }
+
+    .access-btn {
+        display: none;
+    }
+}
+
+@media (min-width: 901px) {
+    .nav-links {
+        position: static;
+        height: auto;
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .mobile-menu-overlay {
+        display: none !important;
+    }
 }
