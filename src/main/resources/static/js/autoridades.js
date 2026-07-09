@@ -325,21 +325,6 @@ function confirmarEliminarAutoridad(idautoridad) {
 }
 
 async function eliminarAutoridad(idautoridad) {
-    const confirmacion = await Swal.fire({
-        icon: "warning",
-        title: "¿Eliminar autoridad?",
-        text: "Esta acción no se puede deshacer.",
-        showCancelButton: true,
-        confirmButtonText: "Sí, eliminar",
-        cancelButtonText: "Cancelar",
-        confirmButtonColor: "#0b7a36",
-        cancelButtonColor: "#151515"
-    });
-
-    if (!confirmacion.isConfirmed) {
-        return;
-    }
-
     const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute("content");
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute("content");
 
@@ -368,7 +353,7 @@ async function eliminarAutoridad(idautoridad) {
             return;
         }
 
-        Swal.fire({
+        await Swal.fire({
             icon: "success",
             title: "Autoridad eliminada",
             text: "El registro fue eliminado correctamente.",
