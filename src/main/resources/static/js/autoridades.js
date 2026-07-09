@@ -325,12 +325,34 @@ function confirmarEliminarAutoridad(idautoridad) {
 }
 
 async function eliminarAutoridad(idautoridad) {
+    const confirmacion = await Swal.fire({
+        icon: "warning",
+        title: "¿Eliminar autoridad?",
+        text: "Esta acción no se puede deshacer.",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#0b7a36",
+        cancelButtonColor: "#151515"
+    });
+
+    if (!confirmacion.isConfirmed) {
+        return;
+    }
+
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute("content");
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute("content");
+
+    const headers = {};
+
+    if (csrfToken && csrfHeader) {
+        headers[csrfHeader] = csrfToken;
+    }
+
     try {
         const response = await fetch(`/api/autoridades/${idautoridad}`, {
             method: "DELETE",
-            headers: {
-                [csrfHeader]: csrfToken
-            }
+            headers
         });
 
         if (!response.ok) {
@@ -339,14 +361,14 @@ async function eliminarAutoridad(idautoridad) {
             Swal.fire({
                 icon: "error",
                 title: "No se pudo eliminar",
-                text: mensaje || "Ocurrió un error al eliminar la autoridad.",
+                text: mensaje || `Error del servidor. Código: ${response.status}`,
                 confirmButtonColor: "#0b7a36"
             });
 
             return;
         }
 
-        await Swal.fire({
+        Swal.fire({
             icon: "success",
             title: "Autoridad eliminada",
             text: "El registro fue eliminado correctamente.",
@@ -356,6 +378,8 @@ async function eliminarAutoridad(idautoridad) {
         await cargarAutoridades();
 
     } catch (error) {
+        console.error("Error eliminando autoridad:", error);
+
         Swal.fire({
             icon: "error",
             title: "Error de conexión",
