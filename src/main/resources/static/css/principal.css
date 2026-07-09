@@ -1471,20 +1471,36 @@ body.mobile-menu-open {
 }
 
 @media (min-width: 901px) {
-    .mobile-menu-overlay {
-        display: none;
-    }
 
     .nav-links {
+        list-style: none;
+        display: flex !important;
+        align-items: center;
+        gap: 26px;
         position: static !important;
-        width: auto;
-        height: auto;
-        padding: 0;
-        background: transparent;
-        box-shadow: none;
-        border-radius: 0;
-        overflow: visible;
-        transform: none;
+        width: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+        transform: none !important;
+    }
+
+    .nav-links li {
+        list-style: none;
+    }
+
+    .mobile-menu-head,
+    .mobile-access-item,
+    .mobile-menu-overlay,
+    .mobile-close-btn {
+        display: none !important;
+    }
+
+    .menu-btn {
+        display: none !important;
     }
 }
 

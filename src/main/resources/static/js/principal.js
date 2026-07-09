@@ -29,22 +29,38 @@ function configurarMenuMovil() {
     const navLinks = document.getElementById("navLinks");
     const overlay = document.getElementById("mobileMenuOverlay");
     const closeBtn = document.getElementById("mobileCloseBtn");
+    const navbar = document.querySelector(".navbar");
+    const accessBtn = document.querySelector(".access-btn");
 
-    if (!menuBtn || !navLinks || !overlay) {
+    if (!menuBtn || !navLinks || !overlay || !navbar) {
         return;
-    }
-
-    if (navLinks.parentElement !== document.body) {
-        document.body.appendChild(navLinks);
-    }
-
-    if (overlay.parentElement !== document.body) {
-        document.body.appendChild(overlay);
     }
 
     let scrollGuardado = 0;
 
+    function moverMenuSegunPantalla() {
+        if (window.innerWidth <= 900) {
+            if (navLinks.parentElement !== document.body) {
+                document.body.appendChild(navLinks);
+            }
+
+            if (overlay.parentElement !== document.body) {
+                document.body.appendChild(overlay);
+            }
+        } else {
+            cerrarMenu();
+
+            if (accessBtn && navLinks.parentElement !== navbar) {
+                navbar.insertBefore(navLinks, accessBtn);
+            } else if (!accessBtn && navLinks.parentElement !== navbar) {
+                navbar.appendChild(navLinks);
+            }
+        }
+    }
+
     function abrirMenu() {
+        moverMenuSegunPantalla();
+
         scrollGuardado = window.scrollY || document.documentElement.scrollTop;
 
         navLinks.classList.add("active");
@@ -71,9 +87,12 @@ function configurarMenuMovil() {
         document.body.style.right = "";
         document.body.style.width = "";
 
-        window.scrollTo(0, scrollGuardado);
+        if (scrollGuardado > 0) {
+            window.scrollTo(0, scrollGuardado);
+        }
     }
 
+    moverMenuSegunPantalla();
     cerrarMenu();
 
     menuBtn.addEventListener("click", () => {
@@ -94,11 +113,7 @@ function configurarMenuMovil() {
         link.addEventListener("click", cerrarMenu);
     });
 
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 900) {
-            cerrarMenu();
-        }
-    });
+    window.addEventListener("resize", moverMenuSegunPantalla);
 }
 
 
