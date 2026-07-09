@@ -2,6 +2,7 @@ package fca.unsm.entity.dao;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class EventosDTO {
     private String titulo;
     private String descripcion;
     private Date fecha;
-    private Time hora;
+    private LocalTime hora;
     private String lugar;
     private String organizador;
     private Integer deleted = 1;
